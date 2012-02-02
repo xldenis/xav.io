@@ -17,8 +17,9 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'acts-as-taggable-on'
 gem 'jquery-rails'
-
+gem 'therubyracer'
 # Use unicorn as the web server
 # gem 'unicorn'
 
