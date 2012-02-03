@@ -10,12 +10,14 @@ html {
 
 
 .content {
-  width: 900px;
+  width: 950px;
   margin: auto;
+  margin-top:80px;
 }
 
 
 article {
+  display:inline-block !important;
   width: 650px;
   margin-bottom: 25px;
 }

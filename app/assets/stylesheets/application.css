@@ -7,3 +7,59 @@
  *= require prettify
  *= require bootstrap
 */
+@import url(http://fonts.googleapis.com/css?family=Lato|Quicksand|Josefin+Sans|Open+Sans); 
+  div #profile{
+  	display:inline;
+    width:250px;
+    height:80px;
+    float:right;
+    color:#424037;
+    font-family: 'Open Sans', sans-serif;
+  }
+  div #profile >.img{
+  width:150px;
+  height:150px;
+  background:#ddd;
+  border-radius:5px;
+  float:left;
+  }
+  div #profile > h2{
+  margin:auto;
+  font-size:40px;
+  font-weight:normal;
+  height:40px;
+  margin-bottom:0px;
+  text-align:center;
+  }
+  div#profile > ul{
+  list-style:none;
+  height:40px;
+  width:210px;
+  display:block;
+  margin:auto;
+  padding:0px;
+  }
+  div#profile >ul> li{
+    margin-right:20px;
+    display:block;
+    float:left;
+    border-radius:15px;
+    background:#424037;
+    width:30px;
+    margin:5px;
+    height:30px;
+    color:#fff;
+    font-size:20px;
+    line-height:30px;
+    text-align:center;
+    -webkit-transition:all .25s;
+
+ }
+  div #profile >ul> li:hover {
+    margin-top:0px;
+    line-height:40px;
+    font-size:25px;
+    border-radius:20px;
+    width:40px;
+    height:40px;
+  }

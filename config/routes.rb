@@ -1,6 +1,6 @@
 Xavio::Application.routes.draw do
   resources :posts
-  match 'posts/tag/:tag' => 'catalog#tag'
+  match 'posts/tag/:tag' => 'posts#tag'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
