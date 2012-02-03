@@ -13,7 +13,6 @@ class PostsController < ApplicationController
     respond_with @post
   end
   def create
-    params[:post][:tags] = params[:post][:tags].split(",")
     @post = Post.new(params[:post])
     @post.save
     respond_with @post
