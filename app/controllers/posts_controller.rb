@@ -31,4 +31,8 @@ class PostsController < ApplicationController
   	@post.destroy
   	respond_with @post
   end
+  def tag
+    @posts = Post.tagged_with(params[:tag])
+    respond_with @posts
+  end
 end

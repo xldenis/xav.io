@@ -22,7 +22,10 @@ end
 
 gem 'acts-as-taggable-on'
 gem 'jquery-rails'
-gem 'therubyracer'
+group :development do 
+
+  gem 'therubyracer'
+end
 # Use unicorn as the web server
 # gem 'unicorn'
 

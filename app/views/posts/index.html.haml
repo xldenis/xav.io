@@ -1,9 +1,5 @@
-.content
-  - @posts.each do |post|
-    %article
-      %header
-        %section
-        %h3
-          %a{:href=>post_path(post)}=post.title
-      %p=post.content
+
+- @posts.each do |post|
+  =render partial => :post :locals => {:post => post}
+  
   

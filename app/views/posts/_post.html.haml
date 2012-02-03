@@ -1,0 +1,9 @@
+%article
+  %header
+    %section
+    %h3
+      %a{:href=>post_path(post)}=post.title
+  %p=post.content
+  - if comments
+    %div{:id=>"disqus_thread"}
+  
