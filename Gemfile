@@ -10,6 +10,7 @@ gem 'bson_ext'
 gem 'mongoid'
 gem 'thin'
 gem 'haml-rails'
+gem 'simple_form'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -17,7 +18,6 @@ group :assets do
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
   gem 'haml'
-  gem 'simple_form'
 end
 
 gem 'acts-as-taggable-on'
