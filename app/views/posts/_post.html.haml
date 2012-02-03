@@ -1,6 +1,7 @@
 %article
   %header
     %section
+      %time{:pubtime=>""}=post.created_at.strftime("%B")+" "+post.created_at.strftime("%d")
     %h3
       %a{:href=>post_path(post)}=post.title
   %p=post.content

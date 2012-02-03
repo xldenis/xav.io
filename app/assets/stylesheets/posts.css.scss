@@ -34,7 +34,8 @@ article > p {
 
 
 article > header > section {
-  background: #000;
+  line-height:40px;
+  font-size:16px;
   width: 150px;
   float: left;
   height: 40px;
@@ -42,6 +43,7 @@ article > header > section {
 
 
 article > header > h3 {
+  line-height:40px;
   font-size: 24px;
   width: 510px;
   padding-left: 40px;
@@ -57,6 +59,7 @@ article > header > h3 > a {
 
 article > header > h3 > a:hover {
   color: #605855;
+  text-decoration:none;
 }
 #disqus_thread {
     float:right;
