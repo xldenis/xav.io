@@ -4,9 +4,10 @@ class SessionsController < ApplicationController
   end
   def create
     auth = request.env["omniauth.auth"]
-    if auth["info"]["nickname"].equals("xldenis")
+    if auth["info"]["nickname"] =="xldenis"
       session[:logged_in]=true
     end
+
     redirect_to root_url
     
   end

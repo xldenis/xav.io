@@ -2,10 +2,15 @@
   %header
     %section
       %time{:pubtime=>""}=post.created_at.strftime("%B")+" "+post.created_at.strftime("%d")
-    %h3
+    %h2
       %a{:href=>post_path(post)}=post.title
   
   =markdown(post.content.to_s)
+  %footer
+    %h5 Tagged in:
+    -if post.tag_list
+      -post.tag_list.each do |tag|
+        =link_to tag,post_tag_path(tag)
   - if comments
     %div{:id=>"disqus_thread"}
   

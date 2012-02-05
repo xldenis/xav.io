@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   respond_to :html
+  before_filter :logged_in?,:only =>[:new,:create,:edit,:update,:destroy]
   def index
     @posts = Post.all
   	respond_with @posts

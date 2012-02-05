@@ -28,11 +28,13 @@
   div #profile >.img{
   width:75px;
   height:75px;
-  background:#ddd;
-  border-radius:5px !important;
   float:left;
   margin-right:10px;
+}
+  div #profile > .img > img{
+    border-radius: 10px;
   }
+  
   div #profile > a > h1{
   margin:auto;
   color:#000;

@@ -17,7 +17,7 @@ module Mongoid
         end
 
         def tag_list
-          self.tags.join(", ") if tags
+          tags
         end
       end
  

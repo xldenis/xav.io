@@ -1,8 +1,8 @@
 Xavio::Application.routes.draw do
   root :to=> "posts#index"
   resources :posts
-  match 'posts/tag/:tag' => 'posts#tag'
-  match '/github/callback' => "sessions#create"
+  match 'posts/tag/:tag' => 'posts#tag',:as=>:post_tag
+  match '/auth/github/callback' => "sessions#create"
   match '/signin' => "sessions#new", :as => :signin
   # The priority is based upon order of creation:
   # first created -> highest priority.
