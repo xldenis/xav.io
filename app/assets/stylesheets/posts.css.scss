@@ -22,10 +22,20 @@ article {
   margin-bottom: 25px;
 }
 
+article > h1,h2,h3{
+  display:block;
+  clear:right;
+}
+article > pre{
+  float:right;
+  margin-right:25px;
 
+}
 article > header {
   width: 650px;
   clear: right;
+  border-bottom:1px #424037 solid;
+  margin-bottom:10px;
 }
 
 
@@ -46,8 +56,9 @@ article > header > section {
 
 article > header > h3 {
   line-height:40px;
-  font-size: 24px;
+  font-size: 28px;
   width: 510px;
+  font-family:Oswald, 'sans-serif';
   padding-left: 40px;
   margin: 0;
 }

@@ -12,6 +12,8 @@ gem 'thin'
 gem 'haml-rails'
 gem 'simple_form','~> 2.0.0.rc'
 gem 'redcarpet'
+gem 'omniauth'
+gem 'omniauth-github'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
