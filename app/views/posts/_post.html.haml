@@ -9,7 +9,7 @@
   %footer
     %h5 Tagged in:
     -if post.tag_list
-      -post.tag_list.each do |tag|
+      -post.tag_list_a.each do |tag|
         =link_to tag,post_tag_path(tag)
   - if comments
     %div{:id=>"disqus_thread"}
