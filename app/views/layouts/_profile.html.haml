@@ -1,9 +1,13 @@
 %div{:id=>"profile"}
-  %h2 Xavier Denis
-  %ul
-    %li B
-    %li P
-    %li F
-    %li G
-    %li
-  
+  %div{:class=>"img"}
+    =image_tag gravatar_url("xldenis@gmail.com")
+  %a
+    %h1 XAVIER DENIS
+  =link_to "blog",posts_path,:id=>"blog"
+  %a{:id=>"portfolio"} portfolio
+  %a{:id=>"github"}
+    =link_to image_tag("github_small.png"), "http://github.com/xldenis"
+  %a{:id=>"twitter"}
+    =link_to image_tag("twitter_small.png"),"http://twitter.com/xldenis"
+  %a{:id=>"rss"}
+    =image_tag "rss_small.png"

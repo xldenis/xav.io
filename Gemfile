@@ -23,7 +23,7 @@ end
 
 gem 'jquery-rails'
 group :development do 
-
+  gem 'ruby-debug19'
   gem 'therubyracer'
 end
 # Use unicorn as the web server

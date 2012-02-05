@@ -7,59 +7,50 @@
  *= require prettify
  *= require bootstrap
 */
-@import url(http://fonts.googleapis.com/css?family=Lato|Quicksand|Josefin+Sans|Open+Sans); 
+@import url(http://fonts.googleapis.com/css?family=Oswald); 
   div #profile{
   	display:inline;
-    width:250px;
-    height:80px;
+    width:330px;
+    height:75px;
     float:right;
     color:#424037;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Oswald', sans-serif;
+  }
+  div #profile > a {
+    color:#000;
+    display:inline-block;
+
+  }
+  div #profile > a:hover {
+    color:#424037;
+    text-decoration:none;  
   }
   div #profile >.img{
-  width:150px;
-  height:150px;
+  width:75px;
+  height:75px;
   background:#ddd;
-  border-radius:5px;
+  border-radius:5px !important;
   float:left;
+  margin-right:10px;
   }
-  div #profile > h2{
+  div #profile > a > h1{
   margin:auto;
-  font-size:40px;
+  color:#000;
+  font-size:42px !important;
   font-weight:normal;
-  height:40px;
+  height:48px;
   margin-bottom:0px;
   text-align:center;
   }
-  div#profile > ul{
-  list-style:none;
-  height:40px;
-  width:210px;
-  display:block;
-  margin:auto;
-  padding:0px;
-  }
-  div#profile >ul> li{
-    margin-right:20px;
-    display:block;
-    float:left;
-    border-radius:15px;
-    background:#424037;
-    width:30px;
-    margin:5px;
-    height:30px;
-    color:#fff;
-    font-size:20px;
-    line-height:30px;
-    text-align:center;
-    -webkit-transition:all .25s;
+  #blog, #portfolio{
+    font-size:24px;
+    display:inline-block;
+    height:22px;
 
- }
-  div #profile >ul> li:hover {
-    margin-top:0px;
-    line-height:40px;
-    font-size:25px;
-    border-radius:20px;
-    width:40px;
-    height:40px;
+  } 
+  #github{
+    margin-left:7px;
+
   }
+
+  
