@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?
   private
   	def logged_in?
-  		return true if session[:logged_in]
+  		unless session[:logged_in]
+        redirect_to root_url
+        return false
+      end
   	end
 end
