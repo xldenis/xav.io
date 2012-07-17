@@ -5,9 +5,18 @@
  *= require_self
  *= require_tree . 
 
- *= require bootstrap
+equire bootstrap
 */
 @import url(http://fonts.googleapis.com/css?family=Oswald); 
+
+  body {
+    background:url(http://subtlepatterns.com/patterns/redox_01.png);
+    line-height: 18px;
+  }
+  a{
+    text-decoration: none;
+    color: #08C;
+  }
   div #profile{
   	display:inline;
     width:330px;
@@ -26,23 +35,25 @@
     text-decoration:none;  
   }
   div #profile >.img{
-  width:75px;
-  height:75px;
-  float:left;
-  margin-right:10px;
-}
+    width:75px;
+    height:75px;
+    float:left;
+    margin-right:10px;
+  }
   div #profile > .img > img{
     border-radius: 10px;
   }
   
   div #profile > a > h1{
-  margin:auto;
-  color:#000;
-  font-size:42px !important;
-  font-weight:normal;
-  height:48px;
-  margin-bottom:0px;
-  text-align:center;
+    margin:auto;
+    color:#000;
+    font-size:42px !important;
+    line-height: 36px;
+    text-rendering:optimizelegibility;
+    font-weight:normal;
+    height:48px;
+    margin-bottom:0px;
+    text-align:center;
   }
   #blog, #portfolio{
     font-size:24px;

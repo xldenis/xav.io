@@ -4,7 +4,7 @@ module Mongoid
       def self.included(base)
         base.class_eval do |base1|
           base1.field :tags, :type => Array    
-          base1.index :tags      
+          base1.index({tags: 1} )   
  
           include InstanceMethods
           extend ClassMethods

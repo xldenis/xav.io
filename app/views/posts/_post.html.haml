@@ -1,7 +1,6 @@
 %article
   %header
-    %section
-      %time{:pubtime=>""}=post.created_at.strftime("%B")+" "+post.created_at.strftime("%d")
+    %time{:pubtime=>""}=post.created_at.strftime("%B")+" "+post.created_at.strftime("%d")
     %h2
       %a{:href=>post_path(post)}=post.title.upcase
   

@@ -25,7 +25,7 @@ end
 
 gem 'jquery-rails'
 group :development do 
-  gem 'ruby-debug19'
+#  gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'therubyracer'
 end
 # Use unicorn as the web server

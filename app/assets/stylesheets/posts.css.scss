@@ -20,6 +20,7 @@ article {
   display:inline-block !important;
   width: 650px;
   margin-bottom: 25px;
+  font-size:13px;
 }
 
 article > h3,h4,h5,h6{
@@ -38,34 +39,42 @@ article > pre{
 article > header {
   width: 650px;
   clear: right;
-  border-bottom:1px #424037 solid;
-  margin-bottom:10px;
+  border-bottom:1px #DDD solid;
+  border-top: 1px #DDD solid;
+  
 }
 
 
 article > p {
-  width: 500px;
+  width: 490px;
   float: right;
+  background:white;
+  padding-top:10px;
+  padding-left:10px;
 }
 
 
-article > header > section {
+article > header > time {
   line-height:40px;
   font-size:16px;
-  width: 150px;
+  width: 140px;
   float: left;
+  padding-left:10px;
   height: 40px;
+  display:inline-block;
 }
 
 
 article > header > h2 {
   line-height:40px;
   font-size: 28px;
-  width: 500px;
+  width: 490px;
   font-weight:normal !important;
   font-family:Oswald, 'sans-serif';
-  padding-left: 40px;
   margin: 0;
+  display: inline-block;
+  background: white;
+  padding-left:10px;
 }
 
 
@@ -80,19 +89,23 @@ article > header > h2 > a:hover {
   text-decoration:none;
 }
 article > footer {
-  margin-top:20px;
-  margin-bottom:10px;
-  width:500px;
+  padding-top:20px;
+  padding-bottom:10px;
+  padding-left:10px;
+  width:490px;
   float:right;
   height:30px;
+  background:white;
 
 }
 article > footer > h5{
   display:inline;
   width: auto;
   float:none;
+  font-weight:bold;
 
 }
+
 #disqus_thread {
     float:right;
 }
