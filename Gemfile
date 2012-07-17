@@ -23,6 +23,9 @@ group :assets do
   gem 'haml'
 end
 
+group :production do 
+	gem 'newrelic_rpm'
+end
 gem 'jquery-rails'
 group :development do 
 #  gem 'ruby-debug19', :require => 'ruby-debug'
