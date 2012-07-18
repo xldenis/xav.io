@@ -8,7 +8,7 @@
   <%= yield :head %>
   <%= favicon_link_tag %>
   <script type="text/javascript">
-
+  //Google
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28905854-1']);
   _gaq.push(['_trackPageview']);
@@ -18,7 +18,30 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
+  //Menu
+  a = function(){
+    y = window.scrollY
+    document.getElementById('profile').style.top = y + 'px';
+  }
+  b = function(){
+    x = document.width;
+    if(x > 1100){
+      r = 'relative';
+      p = '';
+      f = '';
+    }else{
+      r ='static';
+      p = '115px';
+      f = 'none';
+    }
+    e = document.getElementById('profile');
+    e.style.position = r;
+    e.style.paddingLeft = p;
+    e.style.paddingRight = p;
+    e.style.float = f;
+  }
+  window.onscroll = a;
+  window.onresize = b;
 </script>
 </head>
 <body>
