@@ -13,7 +13,7 @@ html {
 
 
 .content {
-  width: 1000px;
+  max-width: 1100px;
   margin: auto;
   margin-top:80px;
 }
@@ -117,7 +117,9 @@ article > header > h2 {
   display: block;
   margin:auto;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px dotted ;
+  margin-bottom:20px;
 }
 
 
@@ -132,11 +134,11 @@ article > header > h2 > a:hover {
   text-decoration:none;
 }
 article > footer {
-  padding-top:20px;
-  padding-bottom:10px;
-  padding-left:10px;
+  padding-top:10px;
+  padding-bottom:20px;
   width:$width;
-
+  border-top:1px dotted;
+  margin-top:20px;
 
 }
 article > footer > h5{
