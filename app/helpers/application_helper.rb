@@ -6,8 +6,8 @@ def markdown(text)
   Redcarpet::Markdown.new(Redcarpet::Render::HTML,options).render(_text).html_safe
   
 end
-def gravatar_url(email)
+def gravatar_url(email,size)
     digest = Digest::MD5.hexdigest(email)
-    "http://gravatar.com/avatar/#{digest}.png?s=75"
+    "http://gravatar.com/avatar/#{digest}.png?s=#{size}"
 end
 end

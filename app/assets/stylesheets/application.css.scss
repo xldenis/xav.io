@@ -7,8 +7,10 @@
 
 equire bootstrap
 */
-@import url(http://fonts.googleapis.com/css?family=Oswald); 
+$width: 400px;
 
+
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
   body {
     background:url(http://subtlepatterns.com/patterns/redox_01.png);
     line-height: 18px;
@@ -18,14 +20,26 @@ equire bootstrap
     color: #08C;
   }
   div #profile{
-  	display:inline;
-    width:330px;
-    height:75px;
-    float:right;
+  	
+    width:$width;
+    height:150px;
+    padding: 25px;
     color:#424037;
     font-family: 'Oswald', sans-serif;
+    border-radius:5px;
+    background:white;
+    box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
+    margin-bottom:35px;
+
   }
-  div #profile > a {
+  div #profile #links{
+    display:inline-block;
+    height:100%;
+    text-align:center;
+    width:226px;
+    margin-right:-1px;
+  }
+  div #profile  a {
     color:#000;
     display:inline-block;
 
@@ -35,38 +49,51 @@ equire bootstrap
     text-decoration:none;  
   }
   div #profile >.img{
-    width:75px;
-    height:75px;
+    width:150px;
+    height:150px;
     float:left;
-    margin-right:10px;
+    margin-right:25px;
   }
-  div #profile > .img > img{
-    border-radius: 10px;
+
+  div #profile nav{
+    width:auto; 
+    padding-top:15px;
+    padding-bottom:15px;
+    border-top:1px dotted;
+    border-bottom:1px dotted;
+    margin-bottom:10px;
+    text-align:center;
   }
-  
-  div #profile > a > h1{
+
+  div #profile   h1{
     margin:auto;
     color:#000;
     font-size:42px !important;
     line-height: 36px;
     text-rendering:optimizelegibility;
-    font-weight:normal;
+    font-weight:700;
     height:48px;
     margin-bottom:0px;
     text-align:center;
+    width:auto;
   }
   #blog, #portfolio{
+    font-weight:300;
     font-size:24px;
     display:inline-block;
     height:22px;
-
+    margin-right:15px;
+    margin-left:15px;
   } 
-  #github{
-    margin-left:7px;
-
+  #github, #twitter, #rss{
+    margin-left:10px;
+    margin-right:10px;
   }
 
-  /* CSS reset */
+
+/* CSS reset */
+
+
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
   margin:0;
   padding:0;
