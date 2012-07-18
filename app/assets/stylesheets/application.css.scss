@@ -36,6 +36,14 @@ $width: 400px;
     position: relative;
 
   }
+  @media screen and (max-width: 1100px){
+    div #profile{
+      padding-left:115px;
+      padding-right:115px;
+      float:none;
+      position:static;
+    }
+  }
   div #profile #links{
     display:inline-block;
     height:100%;
