@@ -6,8 +6,10 @@ $width: 500px;
 $padding: 130px;
 
 html {
-  font-family: Arial,Helvetica;
-  font-size: 12px;
+ // font-family: Arial,Helvetica;
+  font-family: Courier New;
+  font-size: 16px;
+  line-height: 1.5em;
   color: #424037;
 }
 
@@ -25,9 +27,9 @@ article {
   margin-bottom: 25px;
   font-size:13px;
   background:white;
-  border-radius:5px;
-  box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
-  -moz-box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
+ // border-radius:5px;
+ // box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
+ // -moz-box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
 }
 h1 {
   font-size: 30px;
@@ -74,23 +76,23 @@ article > pre{
 
 }
 article > header {
-  width: $width + $padding;
-  clear: right;
+ // width: $width + $padding;
+ // clear: right;
   //border-bottom:1px #DDD solid;
  // border-top: 1px #DDD solid;
-  
+  border-bottom: 1px dotted #ccc;
 }
 
 
 article > p, h1,h2,h3,h4,h5,h6,footer {
-  width: $width;
-  background:white;
-  margin: auto;
+  //width: $width;
+  //background:white;
+ // margin: auto;
 }
 article > h1,h2,h3,h4,h5,h6{
   display:block;
   margin-top: 10px ;
-  margin-bottom: 5px ;
+  //margin-bottom: 5px ;
   font-weight:bold;
 }
 article > p {
@@ -114,12 +116,12 @@ article > header > h2 {
   width: $width;
   font-weight:300 !important;
   font-family:Oswald, 'sans-serif';
-  display: block;
-  margin:auto;
+ // display: block;
+ // margin:auto;
   padding-top: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px dotted ;
-  margin-bottom:20px;
+//  border-bottom: 1px dotted ;
+//  margin-bottom:20px;
 }
 
 
@@ -136,8 +138,8 @@ article > header > h2 > a:hover {
 article > footer {
   padding-top:10px;
   padding-bottom:20px;
-  width:$width;
-  border-top:1px dotted;
+ // width:$width;
+  border-top:1px dotted #ccc;
   margin-top:20px;
 
 }
