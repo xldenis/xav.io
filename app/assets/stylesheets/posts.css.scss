@@ -15,21 +15,32 @@ html {
 
 
 .content {
-  max-width: 1100px;
+  width: $width+$padding;
   margin: auto;
   margin-top:80px;
 }
-
+@media (max-width: 1130px){
+  .content {
+    display:inline-block;
+  }
+}
+@media (max-width: $width+$padding+250) {
+  .content { 
+    width: 80%;
+    margin-top: 0;
+    margin: 0 10%;
+  }
+  article {
+    width: 100% !important;
+  }
+}
 
 article {
-  display:inline-block !important;
+  display:inline-block;
   width: $width + $padding;
   margin-bottom: 25px;
   font-size:13px;
   background:white;
- // border-radius:5px;
- // box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
- // -moz-box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
 }
 h1 {
   font-size: 30px;
@@ -76,10 +87,6 @@ article > pre{
 
 }
 article > header {
- // width: $width + $padding;
- // clear: right;
-  //border-bottom:1px #DDD solid;
- // border-top: 1px #DDD solid;
   border-bottom: 1px dotted #ccc;
 }
 
@@ -116,12 +123,8 @@ article > header > h2 {
   width: $width;
   font-weight:300 !important;
   font-family:Oswald, 'sans-serif';
- // display: block;
- // margin:auto;
   padding-top: 20px;
   padding-bottom: 10px;
-//  border-bottom: 1px dotted ;
-//  margin-bottom:20px;
 }
 
 
@@ -139,7 +142,7 @@ article > footer {
   padding-top:10px;
   padding-bottom:20px;
  // width:$width;
-  border-top:1px dotted #ccc;
+  border-top:1px dotted #ccc; 
   margin-top:20px;
 
 }

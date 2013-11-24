@@ -7,7 +7,8 @@
 
 equire bootstrap
 */
-$width: 400px;
+$width: 500px;
+$padding: 130px;
 
 
 @import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
@@ -19,38 +20,26 @@ a{
   text-decoration: none;
   color: #08C;
 }
+
 div#profile{
 
   width: 200px;
-  // height:150px;
-  // float:right;
   padding: 25px;
   color:#424037;
   font-family: 'Oswald', sans-serif;
-  // border-radius:5px;
   background:white;
-  // -moz-box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
-  // -webkit-box-shadow: 0px 3px 20px 0px rgba(150, 150, 200, .1);
-  // box-shadow: 0px 3px 20px 0px rgba(150, 150, 150, .1);
   margin-bottom:35px;
-  //  position: relative;
   text-align: center;
   float:left;
 }
-// @media screen and (max-width: 1100px){
-//   div#profile{
-//     padding-left:115px;
-//     padding-right:115px;
-//     float:none;
-//     position:static;
-//   }
-// }
-div#profile#links{
-   // display:inline-block;
+div#profile > * {
+  display:inline-block;
+}
+
+div#profile #links{
    height:100%;
    text-align:center;
-    //width:226px;
-    margin-right:-1px;
+   margin-right:-1px;
   }
   div#profile  a {
     color:#000;
@@ -78,11 +67,10 @@ div#profile#links{
     line-height: 36px;
     text-rendering:optimizelegibility;
     font-weight:700;
-   // height:48px;
-   padding: 10px 0 10px 0;
-   margin-bottom:0px;
-   text-align:center;
-   width:auto;
+    padding: 10px 0 10px 0;
+    margin-bottom:0px;
+    text-align:center;
+    width:auto;
  }
  #blog, #portfolio{
   font-weight:300;
@@ -97,6 +85,22 @@ div#profile#links{
   margin-right:10px;
 }
 
+@media (max-width: 1130px) {
+  div#profile {
+    margin-top: 80px;
+  }
+}
+@media (max-width: $width+$padding+250) {
+  div#profile {
+    margin: auto;
+    width: 405px;
+    float:none;
+  }
+  div#profile #links{
+    padding: 35px 0;
+    float:right;
+  }
+}
 
 /* CSS reset */
 
