@@ -15,9 +15,9 @@ html {
 
 
 .content {
-  width: $width+$padding;
-  margin: auto;
-  margin-top:80px;
+  min-width: $width+$padding;
+  max-width: 50%;
+  display:inline-block;
 }
 @media (max-width: 1130px){
   .content {
@@ -37,10 +37,10 @@ html {
 
 article {
   display:inline-block;
-  width: $width + $padding;
   margin-bottom: 25px;
-  font-size:13px;
-  background:white;
+  font-size:1rem;
+  line-height: 1.5;
+
 }
 h1 {
   font-size: 30px;
