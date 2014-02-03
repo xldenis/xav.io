@@ -129,11 +129,6 @@ div#profile #links{
   margin-right:10px;
 }
 
-@media (max-width: 1130px) {
-  div#profile {
-    margin-top: 80px;
-  }
-}
 @media (max-width: $width+$padding+250) {
   div#profile {
     margin: auto;
