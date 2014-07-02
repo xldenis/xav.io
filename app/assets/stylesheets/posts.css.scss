@@ -93,12 +93,6 @@ article > header {
   border-bottom: 1px dotted #ccc;
 }
 
-
-article > p, h1,h2,h3,h4,h5,h6,footer {
-  //width: $width;
-  //background:white;
- // margin: auto;
-}
 article > h1,h2,h3,h4,h5,h6{
   display:block;
   margin-top: 10px ;
@@ -124,7 +118,7 @@ article > header > h2 {
   line-height:40px;
   font-size: 28px;
   width: $width;
-  font-weight:300 !important;
+  font-weight:300;
   font-family:Oswald, 'sans-serif';
   padding-top: 20px;
   padding-bottom: 10px;
