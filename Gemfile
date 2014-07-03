@@ -23,6 +23,10 @@ group :assets do
   gem 'haml'
 end
 
+group :production do
+  gem 'rails_12factor'
+end
+
 group :production do 
 	gem 'newrelic_rpm'
 end
