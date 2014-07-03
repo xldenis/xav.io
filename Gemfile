@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.1.1'
+ruby '2.1.2'
 gem 'rails'
 
 # Bundle edge Rails instead:
@@ -10,7 +10,7 @@ gem 'bson_ext'
 gem 'mongoid'
 gem 'thin'
 gem 'haml-rails'
-gem 'simple_form','~> 2.0.0.rc'
+gem 'simple_form'
 gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
