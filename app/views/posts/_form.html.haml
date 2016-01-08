@@ -1,8 +1,0 @@
-=simple_form_for(@post,:html=>{:class=>"form-vertical"} )do |f|
-   
-  = f.input :title,:input_html => { :class => "span6" }
-  = f.input :content,:as=>:text,:input_html => { :class => "span6" }
-  = f.input :tag_list,:input_html => { :class => "span6" }
-  = f.button :submit,:class=>"btn-primary"
-  -if @post.persisted?
-    =link_to "Delete",post_path(@post),:method=>:delete

@@ -1,0 +1,41 @@
+%html
+  %head
+    %title
+      Xavier Denis
+    %meta{charset: "utf-8"}
+    = stylesheet_link_tag 'style'
+    = javascript_include_tag 'custom'
+    %link(href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900' rel='stylesheet' type='text/css')
+  %body
+    %div{style: 'margin-top: 5%;'}
+      %div.command  $ curl https://api.xav.io/whoami # TODO
+
+      %div.hash
+        %span.pair
+          %p.key name
+          %p.string Xavier Denis
+        %span.pair
+          %p.key location
+          %p.string Austin, TX
+        %span.pair
+          %p.key Job
+          %p.string Production Engineering
+        %span.pair
+          %p.key date
+          %p.string February 22 - 23
+        %span.pair
+          %p.key github
+          %p.string=link_to 'https://github.com/xldenis', 'https://github.com/xldenis'
+        %span.pair
+          %p.key languages
+          %p.string [Haskell, Ruby, Rust]
+
+      %footer
+        %p
+          Wanna chat? Contact me at
+          %a{href:"mailto:xldenis@gmail.com?Subject=Chat"} xldenis@gmail.com.
+        %p
+          Follow me at
+          %a{href: "https://twitter.com/xldenis"} @xldenis.
+
+

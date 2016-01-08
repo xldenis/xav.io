@@ -1,0 +1,71 @@
+
+.hash:before {
+  content: "{";
+}
+.hash {
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  padding-top: 50px;
+  color: #93a1a1;
+  width: 70%;
+  margin: auto;
+  font-size: 1.5rem;
+
+  p {
+   // margin: 1em 0 1em 0;
+    display: inline;
+    color: #2aa198 !important;
+  }
+  p:before {
+    content: "\"";
+    color: #93a1a1;
+  }
+  p:after {
+    content: "\"";
+    color: #93a1a1;
+  }
+
+  p.key:before {
+    content: "\"";
+    color: #93a1a1;
+  }
+  p.key{
+    display: inline-block;
+    margin: 0.25em 0;
+  }
+  p.key:after {
+    content: "\" :";
+    color: #93a1a1;
+  }
+  p + p {
+    text-indent: 0;
+  }
+
+  .pair {
+    display:block;
+    text-indent: 0.5em;
+  }
+  .pair:after{
+    content: ",";
+  }
+  .pair:last-child:after {
+    content: "";
+  }
+
+}  .hash:after {
+  content: "}";
+}
+@media (max-width: 640px) {
+  .hash,.command {
+    font-size: inherit;
+    width: 90%;
+  
+  .pair {
+    text-indent: 0em;
+  }
+}
+}
+@media (min-width: 1200px) {
+  .hash,.command {
+    font-size: 2rem;
+  }
+}
