@@ -386,8 +386,17 @@ table {
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
 }
 
-.hash:before {
-  content: "{";
+.string {
+  display: inline;
+  color: #2aa198 !important;
+}
+.string:before {
+  content: "\"";
+  color: #93a1a1;
+}
+.string:after {
+  content: "\"";
+  color: #93a1a1;
 }
 
 .hash {
@@ -397,33 +406,6 @@ table {
   width: 70%;
   margin: auto;
   font-size: 1.5rem;
-}
-.hash p {
-  display: inline;
-  color: #2aa198 !important;
-}
-.hash p:before {
-  content: "\"";
-  color: #93a1a1;
-}
-.hash p:after {
-  content: "\"";
-  color: #93a1a1;
-}
-.hash p.key:before {
-  content: "\"";
-  color: #93a1a1;
-}
-.hash p.key {
-  display: inline-block;
-  margin: 0.25em 0;
-}
-.hash p.key:after {
-  content: "\" :";
-  color: #93a1a1;
-}
-.hash p + p {
-  text-indent: 0;
 }
 .hash .pair {
   display: block;
@@ -435,9 +417,49 @@ table {
 .hash .pair:last-child:after {
   content: "";
 }
-
+.hash .key {
+  color: #2aa198 !important;
+  display: inline-block;
+  margin: 0.25em 0;
+}
+.hash .key:before {
+  content: "\"";
+  color: #93a1a1;
+}
+.hash .key:after {
+  content: "\":";
+  color: #93a1a1;
+}
+.hash p + p {
+  text-indent: 0;
+}
 .hash:after {
   content: "}";
+}
+.hash:before {
+  content: "{";
+}
+
+.array {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+.array:before {
+  content: "[";
+}
+.array:after {
+  content: "]";
+}
+.array li {
+  list-style: none;
+  display: inline;
+}
+.array > :after {
+  content: ",";
+}
+.array > :last-child:after {
+  content: "";
 }
 
 @media (max-width: 640px) {

@@ -1,7 +1,19 @@
 
-.hash:before {
-  content: "{";
+.string {
+  display: inline;
+  color: #2aa198 !important;
+
+  &:before {
+    content: "\"";
+    color: #93a1a1;
+  }
+
+  &:after {
+    content: "\"";
+    color: #93a1a1;
+  }
 }
+
 .hash {
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
   padding-top: 50px;
@@ -10,55 +22,76 @@
   margin: auto;
   font-size: 1.5rem;
 
-  p {
-   // margin: 1em 0 1em 0;
-    display: inline;
-    color: #2aa198 !important;
-  }
-  p:before {
-    content: "\"";
-    color: #93a1a1;
-  }
-  p:after {
-    content: "\"";
-    color: #93a1a1;
+  .pair {
+    display:block;
+    text-indent: 0.5em;
+
+    &:after{
+      content: ",";
+    }
+    &:last-child:after {
+      content: "";
+    }
   }
 
-  p.key:before {
-    content: "\"";
-    color: #93a1a1;
-  }
-  p.key{
+  .key{
+    color: #2aa198 !important;
     display: inline-block;
     margin: 0.25em 0;
+
+    &:before {
+      content: "\"";
+      color: #93a1a1;
+    }
+    &:after {
+      content: "\":";
+      color: #93a1a1;
+    }
   }
-  p.key:after {
-    content: "\" :";
-    color: #93a1a1;
-  }
+
   p + p {
     text-indent: 0;
   }
 
-  .pair {
-    display:block;
-    text-indent: 0.5em;
-  }
-  .pair:after{
-    content: ",";
-  }
-  .pair:last-child:after {
-    content: "";
+  &:after {
+    content: "}";
   }
 
-}  .hash:after {
-  content: "}";
+  &:before {
+    content: "{";
+  }
 }
+
+.array {
+  display: inline;
+  padding: 0;
+  margin: 0;
+
+  &:before {
+    content: "[";
+  }
+  &:after {
+    content: "]";
+  }
+  li {
+    list-style: none;
+    display: inline;
+  }
+
+  & > :after{
+    content: ",";
+  }
+
+  & > :last-child:after {
+    content: "";
+  }
+}
+
 @media (max-width: 640px) {
   .hash,.command {
     font-size: inherit;
     width: 90%;
-  
+
   .pair {
     text-indent: 0em;
   }
