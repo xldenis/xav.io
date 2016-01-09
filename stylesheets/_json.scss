@@ -20,9 +20,7 @@ $quote: $base1;
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
   padding-top: 50px;
   color: $punctuation;
-  width: 70%;
   margin: auto;
-  font-size: 1.5rem;
 
   .pair {
     display:block;
@@ -86,21 +84,5 @@ $quote: $base1;
 
   & > :last-child:after {
     content: "";
-  }
-}
-
-@media (max-width: 640px) {
-  .hash,.command {
-    font-size: inherit;
-    width: 90%;
-
-  .pair {
-    text-indent: 0em;
-  }
-}
-}
-@media (min-width: 1200px) {
-  .hash,.command {
-    font-size: 2rem;
   }
 }
