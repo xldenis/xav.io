@@ -1,6 +1,7 @@
 
 require 'rubygems'
 require 'bundler'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -19,7 +20,7 @@ root = ::File.dirname(__FILE__)
 # don't allow you to write to the file system on the fly (like Heroku).
 # Remove this conditional if you want to compile Sass in production.
 
-if ENV['RACK_ENV'] != 'production'
+# if ENV['RACK_ENV'] != 'production'
   require 'sass'
   require 'sass/plugin/rack'
   require 'compass'
@@ -28,7 +29,7 @@ if ENV['RACK_ENV'] != 'production'
   Compass.configure_sass_plugin!
 
   use Sass::Plugin::Rack  # Sass Middleware
-end
+# end
 
 # Other Rack Middleware
 use Rack::ShowStatus      # Nice looking 404s and other messages
@@ -38,13 +39,9 @@ use Rack::ShowExceptions  # Nice looking errors
 require 'rack/contrib/try_static'
 use Rack::TryStatic, :root => (root + '/public'), :urls => %w(/), :try => %w(.html index.html /index.html)
 
-opts = {
-  Port: ENV['PORT'] || '9292'
-}
-
 # Use Rack::Cascade and Rack::Directory on other platforms for static assets
-Rack::Handler::Thin.run Rack::Cascade.new([
+run Rack::Cascade.new([
   Serve::RackAdapter.new(root + '/views'),
   Rack::Directory.new(root + '/public')
-]), opts
+])
 

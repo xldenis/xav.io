@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 ruby '2.2.3'
 
 gem 'rack-contrib'
+gem 'rack', '>=1.6.0'
 # Use Stasis to compile down to static form
 gem 'serve'
 
