@@ -1,23 +1,25 @@
+$punctuation: $base0;
+$quote: $base1;
 
 .string {
   display: inline;
-  color: #2aa198 !important;
+  color: $cyan !important;
 
   &:before {
     content: "\"";
-    color: #93a1a1;
+    color: $quote;
   }
 
   &:after {
     content: "\"";
-    color: #93a1a1;
+    color: $quote;
   }
 }
 
 .hash {
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
   padding-top: 50px;
-  color: #93a1a1;
+  color: $punctuation;
   width: 70%;
   margin: auto;
   font-size: 1.5rem;
@@ -41,11 +43,11 @@
 
     &:before {
       content: "\"";
-      color: #93a1a1;
+      color: $quote;
     }
     &:after {
       content: "\":";
-      color: #93a1a1;
+      color: $quote;
     }
   }
 

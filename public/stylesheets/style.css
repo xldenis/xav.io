@@ -378,14 +378,6 @@ table {
 }
 
 /* light is default mode, so pair with general html definition */
-.command {
-  font-size: 1.5rem;
-  width: 70%;
-  margin: auto;
-  color: #93a1a1;
-  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-}
-
 .string {
   display: inline;
   color: #2aa198 !important;
@@ -402,7 +394,7 @@ table {
 .hash {
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
   padding-top: 50px;
-  color: #93a1a1;
+  color: #839496;
   width: 70%;
   margin: auto;
   font-size: 1.5rem;
@@ -476,6 +468,26 @@ table {
     font-size: 2rem;
   }
 }
+.zsh {
+  font-size: 1.5rem;
+  width: 70%;
+  margin: auto;
+  color: #657b83;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}
+.zsh:before {
+  content: "$ ";
+}
+.zsh .command {
+  color: #859900;
+}
+.zsh .comment {
+  color: #93a1a1;
+}
+.zsh .comment:before {
+  content: "# ";
+}
+
 html {
   color-profile: sRGB;
 }
@@ -484,6 +496,8 @@ body {
   width: 100%;
   margin: 0;
   font-weight: 100;
+  background: #fdf6e3;
+  color: #586e75;
 }
 
 .slide:nth-child(odd) {
@@ -591,14 +605,11 @@ input[type="button"]:hover {
 }
 a {
   text-decoration: none;
-  color: inherit;
+  color: #dc322f;
   font-weight: 400;
 }
 a:hover {
   border-bottom: 1px dashed;
-}
-a:visited {
-  color: #dc322f;
 }
 
 .logo {

@@ -1,0 +1,27 @@
+
+.zsh {
+  font-size: 1.5rem;
+  width: 70%;
+  margin: auto;
+  color:  $base00;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+
+  &:before {
+    content: "$ ";
+  }
+
+  .command {
+    color:  $green;
+  }
+
+  .arg {
+  }
+
+  .comment {
+    color: $base1;
+
+    &:before {
+      content: "# ";
+    }
+  }
+}
