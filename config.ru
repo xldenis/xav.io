@@ -18,14 +18,15 @@ root = ::File.dirname(__FILE__)
 # Compile Sass on the fly with the Sass plugin. Some production environments
 # don't allow you to write to the file system on the fly (like Heroku).
 # Remove this conditional if you want to compile Sass in production.
+
 if ENV['RACK_ENV'] != 'production'
   require 'sass'
   require 'sass/plugin/rack'
   require 'compass'
-  
+
   Compass.add_project_configuration(root + '/compass.config')
   Compass.configure_sass_plugin!
-  
+
   use Sass::Plugin::Rack  # Sass Middleware
 end
 
@@ -33,18 +34,17 @@ end
 use Rack::ShowStatus      # Nice looking 404s and other messages
 use Rack::ShowExceptions  # Nice looking errors
 
-# Rack Application
-if ENV['SERVER_SOFTWARE'] =~ /passenger/i
-  # Passenger only needs the adapter
-  run Serve::RackAdapter.new(root + '/views')
-else
-  # Use Rack::TryStatic to attempt to load files from public first
-  require 'rack/contrib/try_static'
-  use Rack::TryStatic, :root => (root + '/public'), :urls => %w(/), :try => %w(.html index.html /index.html)
+# Use Rack::TryStatic to attempt to load files from public first
+require 'rack/contrib/try_static'
+use Rack::TryStatic, :root => (root + '/public'), :urls => %w(/), :try => %w(.html index.html /index.html)
 
-  # Use Rack::Cascade and Rack::Directory on other platforms for static assets
-  run Rack::Cascade.new([
-    Serve::RackAdapter.new(root + '/views'),
-    Rack::Directory.new(root + '/public')
-  ])
-end
+opts = {
+  Port: ENV['PORT'] || '9292'
+}
+
+# Use Rack::Cascade and Rack::Directory on other platforms for static assets
+Rack::Handler::Thin.run Rack::Cascade.new([
+  Serve::RackAdapter.new(root + '/views'),
+  Rack::Directory.new(root + '/public')
+]), opts
+

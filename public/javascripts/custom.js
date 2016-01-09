@@ -1,4 +1,3 @@
-
 //Prints out text one letter at a time with delay.
 function type(elem, text, delay, callback) {
   for(var eId = 0; eId < elem.children.length; eId++){
@@ -42,7 +41,7 @@ function type(elem, text, delay, callback) {
 function load(elem,delay) {
   setTimeout(function() {
     function show(i){
-      if(elem.childElementCount >= i){
+      if(i < elem.childElementCount){
         elem.children[i].style.opacity = 1;
         setTimeout(function() {show(i+1)} , 25);
       }
