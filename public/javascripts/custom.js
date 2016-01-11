@@ -1,10 +1,12 @@
 //Prints out text one letter at a time with delay.
 function type(elem, text, delay, callback) {
+  elem.style.width = elem.offsetWidth + 'px';
+
   for(var eId = 0; eId < elem.children.length; eId++){
-    elem.children[eId].style.opacity = 0;
+    elem.children[eId].style.display = 'none';
   }
 
-  function next(remText, elemId) {
+  function next(remText, elemId, cb) {
 
     if(remText == ""){
       var child = elem.children[elemId];
@@ -14,12 +16,12 @@ function type(elem, text, delay, callback) {
       }
 
       if(!(elemId < elem.children.length)) {
-        return callback();
+        return cb();
       }
 
       remText = child.innerHTML.trim();
       child.innerHTML = "▊";
-      child.style.opacity = 1;
+      child.style.display = '';
 
       elemId += 1;
 
@@ -32,9 +34,9 @@ function type(elem, text, delay, callback) {
 
     var randDelay = Math.floor(Math.random() * 100) - 40;
 
-    setTimeout(function() {next(remText, elemId)}, delay + randDelay);
+    setTimeout(function() {next(remText, elemId, cb)}, delay + randDelay);
   }
-  next("",0);
+  next("",0, function () { elem.style.width = ""; callback(); });
 
 }
 

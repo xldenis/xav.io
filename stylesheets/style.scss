@@ -31,7 +31,10 @@ article {
   .left-aligned {
     text-align: left;
     display: inline-block;
-    clear: both
+  }
+  .left-aligned.clear:after {
+    content: " ";
+    white-space: pre;
   }
 }
 
