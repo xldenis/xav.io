@@ -31,10 +31,7 @@ article {
   .left-aligned {
     text-align: left;
     display: inline-block;
-  }
-  .left-aligned.clear:after {
-    content: " ";
-    white-space: pre;
+    min-width: 51%;
   }
 }
 
