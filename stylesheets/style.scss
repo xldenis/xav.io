@@ -14,15 +14,14 @@ body {
   margin:0;
   font-weight: 100;
   background: $base3;
-  color: $base01
+  color: $base01;
+  text-align: center;
 }
 
 
 article {
-  width: 70%;
-  margin: auto;
   margin-top: 50px;
-  text-align: center;
+  display: inline-block;
   font-weight: 100;
 
   h1,h5,h6 {
@@ -30,19 +29,12 @@ article {
   }
   .left-aligned {
     text-align: left;
-    display: inline-block;
-    min-width: 51%;
   }
 }
 
 footer {
-  width: 100%;
-  float:left;
   margin: 2em 0;
-  text-align: center;
   vertical-align: middle;
-  bottom: 0;
-
 }
 
 a {
