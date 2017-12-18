@@ -5,3 +5,5 @@ tmp/
 .sass-cache/
 *.sublime-workspace
 public/stylesheets/
+_site/
+_cache/
