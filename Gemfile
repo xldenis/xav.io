@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Set Ruby version
-ruby '2.2.3'
+ruby '2.4.1'
 
 gem 'rack-contrib'
 gem 'rack', '>=1.6.0'
