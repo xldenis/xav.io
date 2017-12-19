@@ -5,6 +5,8 @@ module Main where
 import           Data.Monoid (mappend)
 import           Hakyll
 import           Hakyll.Web.Sass
+import           Text.Pandoc
+import           Text.Pandoc.Highlighting
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -37,7 +39,8 @@ main = hakyll $ do
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        let writerOpts = defaultHakyllWriterOptions { writerHighlightStyle = Just pygments }
+        compile $ pandocCompilerWith defaultHakyllReaderOptions writerOpts
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
@@ -76,5 +79,5 @@ main = hakyll $ do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
+    -- dateField "date" "%B %e, %Y" `mappend`
     defaultContext

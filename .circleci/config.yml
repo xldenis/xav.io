@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: xldenis/hakyll:4.11.0.0-ext
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-stack-{{ checksum "xxx.cabal" }}
+            - stack-work-
+      - run:
+          name: Build dependencies
+          command: stack build --only-dependencies --ghc-options="-j2"
+      - run:
+          name: Build executable
+          command: stack build
+      - save_cache:
+          paths:
+            - .stack-work
+            - /root/.stack/
+          key: v1-stack-work-{{ checksum "xxx.cabal" }}
