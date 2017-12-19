@@ -1,14 +1,20 @@
+@import "solarized";
+@import "normalize";
+
 html {
   font-size: 62.5%;
 }
 
 body {
   font-size: 1.6rem;
-  color: #000;
+  line-height: 1.5;
+  color: $base01;
+  background: $base3;
+  font-family: 'Source Sans Pro', 'Arimo','Lato';
 }
 
 header {
-  border-bottom: 0.2rem solid #000;
+  border-bottom: 0.2rem solid $yellow;
 }
 
 nav {
@@ -18,7 +24,7 @@ nav {
 nav a {
   font-size: 1.8rem;
   font-weight: bold;
-  color: black;
+  color: $yellow;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -26,9 +32,9 @@ nav a {
 footer {
   margin-top: 3rem;
   padding: 1.2rem 0;
-  border-top: 0.2rem solid #000;
+  border-top: 0.2rem solid $base01;
   font-size: 1.2rem;
-  color: #555;
+  color: $base00;
 }
 
 h1 {
@@ -42,12 +48,12 @@ h2 {
 article .header {
   font-size: 1.4rem;
   font-style: italic;
-  color: #555;
+  color: $base00;
 }
 
 .logo a {
   font-weight: bold;
-  color: #000;
+  color: $yellow;
   text-decoration: none;
 }
 
