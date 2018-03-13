@@ -1,0 +1,10 @@
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/
+.sass-cache/
+*.sublime-workspace
+public/stylesheets/
+_site/
+_cache/
+.stack-work/
