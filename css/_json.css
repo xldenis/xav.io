@@ -1,0 +1,7 @@
+ .string{display:inline;color:#2aa198!important}.string:before{content:"\"";
+    color: #93a1a1; }
+  .string:after {
+    content: "\"";color:#93a1a1}.hash{font-family:Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;padding-top:50px;color:#839496;margin:auto}.hash .pair{display:block;text-indent:0.5em}.hash .pair:after{content:","}.hash .pair:last-child:after{content:""}.hash .key{color:#2aa198!important;display:inline-block;margin:0.25em 0}.hash .key:before{content:"\"";
+      color: #93a1a1; }
+    .hash .key:after {
+      content: "\":";color:#93a1a1}.hash p+p{text-indent:0}.hash:after{content:"}"}.hash:before{content:"{"}.array{display:inline;padding:0;margin:0}.array:before{content:"["}.array:after{content:"]"}.array li{list-style:none;display:inline}.array>:after{content:","}.array>:last-child:after{content:""}
