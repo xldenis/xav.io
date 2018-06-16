@@ -169,6 +169,8 @@ body{
 p{
  font-family:"ff-din-web-pro-1","ff-din-web-pro-2",sans-serif;
  font-weight:lighter}
+ p img{
+ max-width:100%}
 
 main{
  width:90%;
@@ -187,7 +189,9 @@ footer{
  font-size:1.2rem;
  color:#657b83}
 
-article .header{
+article{
+ font-weight:lighter}
+ article .header{
  font-size:1.4rem;
  color:#657b83}
  article .header date{
