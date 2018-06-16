@@ -1,8 +1,7 @@
 ---
 date: 2018-06-06
+title: Debugging your own language
 ---
-
-Debugging your own language
 
 For the past year, I've been working on writing my own functional programming language. It's taught me a lot already, and there's still a lot more to learn. Recently, I improved the performance of of traits (typeclasses) significantly, but when I compared it to a ruby equivalent, it was still 4 times slower. Knowing that ruby isn't a particularily fast language, and that 2 seconds to (naively) count the first 33 fibonacci numbers is a lot, I decided to investigate.
 

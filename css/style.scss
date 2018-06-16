@@ -45,9 +45,10 @@ a {
     border-bottom: 1px dashed;
  }
 }
+
 @media (max-width: 440px) {
   .array {
-    display: block;
+    display: inline-block;
     padding-left: 1em;
   }
 }

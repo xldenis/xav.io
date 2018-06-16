@@ -7,8 +7,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-stack-{{ checksum "xxx.cabal" }}
-            - stack-work-
+            - v1-stack-work-{{ checksum "xxx.cabal" }}
       - run:
           name: Build executable
           command: stack build

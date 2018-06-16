@@ -1,5 +1,7 @@
 @import "solarized";
 @import "normalize";
+@import "json";
+@import "typescale";
 
 html {
   font-size: 62.5%;
@@ -10,7 +12,16 @@ body {
   line-height: 1.5;
   color: $base01;
   background: $base3;
-  font-family: 'Source Sans Pro', 'Arimo','Lato';
+}
+
+p {
+  font-family: "ff-din-web-pro-1", "ff-din-web-pro-2", sans-serif;
+  font-weight: lighter;
+}
+
+main {
+  width: 90%;
+  margin: auto;
 }
 
 code {
@@ -22,135 +33,59 @@ pre code {
   width: 100%;
 }
 
-header {
-  border-bottom: 0.2rem solid $yellow;
-}
-
-nav {
-  text-align: right;
-}
-
-nav a {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: $yellow;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
 footer {
   margin-top: 3rem;
   padding: 1.2rem 0;
-  border-top: 0.2rem solid $base01;
   font-size: 1.2rem;
   color: $base00;
 }
 
-h1 {
-  font-size: 2.4rem;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
 article .header {
   font-size: 1.4rem;
-  font-style: italic;
   color: $base00;
+
+  date {
+    font-style: italic;
+  }
 }
 
-.logo a {
-  font-weight: bold;
-  color: $yellow;
+nav {
+  & > a {
+    font-size: 2rem;
+    color: $yellow;
+    text-transform: uppercase;
+  }
+
+  a {
+    margin-right: 2rem;
+  }
+}
+
+.logo {
+  display: inline-block;
+
+  a {
+    font-size: inherit;
+    font-weight: bold;
+    color: $yellow;
+    text-decoration: none;
+  }
+}
+
+a {
   text-decoration: none;
+  color: $red;
+  font-weight: 400;
+
+  &:hover {
+    border-bottom: 1px dashed;
+ }
 }
 
-@media (max-width: 319px) {
-  body {
-    width: 90%;
-    margin: 0;
-    padding: 0 5%;
-  }
-  header {
-    margin: 4.2rem 0;
-  }
-  nav {
-    margin: 0 auto 3rem;
-    text-align: center;
-  }
-  footer {
-    text-align: center;
-  }
-  .logo {
-    text-align: center;
-    margin: 1rem auto 3rem;
-  }
-  .logo a {
-    font-size: 2.4rem;
-  }
-  nav a {
-    display: block;
-    line-height: 1.6;
+.post-list {
+  padding: 0;
+  li {
+    list-style-type: none;
   }
 }
 
-@media (min-width: 320px) {
-  body {
-    width: 90%;
-    margin: 0;
-    padding: 0 5%;
-  }
-  header {
-    margin: 4.2rem 0;
-  }
-  nav {
-    margin: 0 auto 3rem;
-    text-align: center;
-  }
-  footer {
-    text-align: center;
-  }
-  .logo {
-    text-align: center;
-    margin: 1rem auto 3rem;
-  }
-  .logo a {
-    font-size: 2.4rem;
-  }
-  nav a {
-    display: inline;
-    margin: 0 0.6rem;
-  }
-}
-
-@media (min-width: 640px) {
-  body {
-    width: 60rem;
-    margin: 0 auto;
-    padding: 0;
-  }
-  header {
-    margin: 0 0 3rem;
-    padding: 1.2rem 0;
-  }
-  nav {
-    margin: 0;
-    text-align: right;
-  }
-  nav a {
-    margin: 0 0 0 1.2rem;
-    display: inline;
-  }
-  footer {
-    text-align: right;
-  }
-  .logo {
-    margin: 0;
-    text-align: left;
-  }
-  .logo a {
-    float: left;
-    font-size: 1.8rem;
-  }
-}
