@@ -9,6 +9,7 @@ executable site
                   , hakyll
                   , hakyll-sass
                   , pandoc
+                  , filepath
   hs-source-dirs:   src
   ghc-options:      -threaded
   default-language: Haskell2010

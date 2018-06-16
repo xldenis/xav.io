@@ -17,7 +17,11 @@ body {
 p {
   font-family: "ff-din-web-pro-1", "ff-din-web-pro-2", sans-serif;
   font-weight: lighter;
+  img {
+    max-width: 100%;
+  }
 }
+
 
 main {
   width: 90%;
@@ -40,12 +44,16 @@ footer {
   color: $base00;
 }
 
-article .header {
-  font-size: 1.4rem;
-  color: $base00;
+article {
+  font-weight: lighter;
 
-  date {
-    font-style: italic;
+  .header {
+    font-size: 1.4rem;
+    color: $base00;
+
+    date {
+      font-style: italic;
+    }
   }
 }
 

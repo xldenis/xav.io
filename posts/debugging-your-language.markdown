@@ -9,7 +9,14 @@ Looking over the core language output from the compiler and the corresponding LL
 
 LLVM has support for tracking Debug Metadata [], but it requires me to annotate the IR the compiler produces with all sorts of information. It's something I'd like to do soon but don't have the time for yet. Hunting around the web led me to discover the `-debugify` pass, which attaches debug information to an IR file. This doesn't give me _source_-level debugging but it's more than good enough. Unfortunately `debugify` forgets to add a required `Debug Version Info` struct but it can easily be added by hand.
 
-< instrumented ir >
+When you compile LLVM IR with `-g` in `clang`, it will generate the `dSYM` bundle you need to get name information into your debugger of choice. In my case I set up XCode's `Instruments.app` since I'm on a Mac. Profiler and instrumented binary in hand, I took a look at my runtimes!
 
-Once I produced an instrumented binary, I was able to profile it with `Instruments.app` XCode's profiler. It revealed exactly what I had suspected originally, a rare occurence! The calls to `malloc` were the ones taking up the runtime!
+![](/images/debugger-malloc.png)
 
+ It revealed exactly what I had suspected originally, a rare occurence! The calls to `malloc` were the ones taking up the runtime! This led me to doing something I had put off for a long time: adding a garbage collector!
+
+![](/images/debugger-gc.png)
+
+Runtime dropped from 13.32sto 4.43s on the main thread! At some point in the future I'll have to learn how to properly generate source-level debug metadata, but not now.
+
+That's all folks!
