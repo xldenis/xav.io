@@ -27,9 +27,16 @@
         
     </section>
     <section>
-        <p>For the past week I’ve been going through a phase of tech-debt cleannup in Ill. One of the objectives is to come up with a unified type for compiler phases. Most phases already have a type along the lines of <code class="sourceCode haskell"><span class="dt">Module</span> a_i <span class="ot">-&gt;</span> <span class="dt">Either</span> e_i (<span class="dt">Module</span> a_i<span class="fu">+</span><span class="dv">1</span>)</code>. The problem was the error type at each phase either had to be shared by <em>all</em> phases leading to an unwiedly sum <em>or</em> I had to unpack it between each phase.</p>
-<p>A long time ago I read a <a href="https://gist.github.com/chrisdone/fd6c6f6a8c5b5d4d3c3f91289343629f">couple</a> <a href="https://github.com/jaspervdj/talks/blob/master/2017-skillsmatter-errors/slides.md#which-is-the-best-representation-2">great</a> posts on errors which presented a solution to this problem. They sat on the backburner while there were more important things to work on, but now I’ve decided to entirely overhaul the error handling as part of that. 2</p>
-<p>I adopted Jasper’s <code>Error</code> datatype, making that the shape of errors between subsystems. Internally, I’ll use sum types to keep context about every error and then render it into a <code>Error</code> type at the subsystem boundary.</p>
+        <p>For the past week I’ve been going through a phase of tech-debt cleannup in Ill. One of the objectives is to come up with a unified type for compiler phases. Most phases already have a type along the lines of <code class="sourceCode haskell"><span class="dt">Module</span> a_i <span class="ot">-&gt;</span> <span class="dt">Either</span> e_i (<span class="dt">Module</span> a_{i<span class="fu">+</span><span class="dv">1</span>})</code>. But when it came time to compose two phases into a pipeline, I hit a problem:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ot">parse     ::</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">ParseError</span> (<span class="dt">Module</span> <span class="dt">SourceSpan</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="ot">typecheck ::</span> <span class="dt">Module</span> <span class="dt">SourceSpan</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">TypecheckError</span> (<span class="dt">Module</span> <span class="dt">TypeAnnotation</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="ot">(&gt;=&gt;) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> m c) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m c)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">--          v-- Here `m` is (Either ParseError).</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">pipeline <span class="fu">=</span> parse <span class="fu">&gt;=&gt;</span> typecheck</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">--                ^       ^-- and here it's (Either TypecheckError).</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">--                \-- leading to a unification error between the left and right sides of the pipeline.</span></a></code></pre></div>
+<p>This meant the error type at each phase either had to be shared by <em>all</em> phases leading to an unwiedly sum <em>or</em> I had to unpack it between each phase. To compound the problem, the errors I do report are already of very poor quality.</p>
 <p>Starting with: <img src="../../images/old-errors.png" /></p>
 <p>The goal is to end with something like: <img src="../../images/new-errors.png" /></p>
 <p>I won’t pretend to be an expert in error message design, but it’s clear that the first image leaves a lot to be desired. For this error refactoring, I had a couple goals in mind.</p>
@@ -38,7 +45,31 @@
 <li>I wanted access to all the information on <em>how</em> to resolve the error. Often, this is just returning more of the context at the site of the error: which constraints were missing, which terms failed to unify, etc…</li>
 <li>If possible provide context for users. This isn’t really for me but for the <del>friends</del> unfortunate bystanders I coerce into writing example programs.</li>
 </ul>
-<p>TODO</p>
+<p>A long time ago I read a <a href="https://gist.github.com/chrisdone/fd6c6f6a8c5b5d4d3c3f91289343629f">couple</a> of <a href="https://github.com/jaspervdj/talks/blob/master/2017-skillsmatter-errors/slides.md#which-is-the-best-representation-2">great</a> posts on errors which presented a solution to this problem. They sat on the backburner while there were more important things to work on, but now I’ve decided to entirely overhaul the error handling as part of that.</p>
+<p>I adopted Jasper’s <code>Error</code> datatype, making that the shape of errors between subsystems. Internally, I’ll use sum types to keep context about every error and then render it into a <code>Error</code> type at the subsystem boundary. While remaining generic, it retains enough structure to render intelligently.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1">        <span class="co">-- v-- `a` is the type of the document annotations for `prettyprinter`</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">data</span> <span class="dt">Error</span> a <span class="fu">=</span> <span class="dt">Error</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  {<span class="ot"> errHeader  ::</span> <span class="dt">Doc</span> a   <span class="co">-- name of error (subject)</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  ,<span class="ot"> errKind    ::</span> <span class="dt">String</span>  <span class="co">-- subsystem (sender)</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  ,<span class="ot"> errSummary ::</span> <span class="dt">Doc</span> a   <span class="co">-- details of error (body)</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  ,<span class="ot"> errHints   ::</span> [<span class="dt">Doc</span> a] <span class="co">-- solutions</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  }</a></code></pre></div>
+<p>Then inside a pass I can use whatever error-reporting and handling methods I’d like, though I prefer to use an error ADT which holds the context for every error.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">data</span> <span class="dt">MyError</span> <span class="fu">=</span> <span class="dt">Error1</span> <span class="fu">|</span> <span class="dt">ErrorInFunction</span> <span class="dt">Name</span> <span class="dt">MyError</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">-- a helper to provide additional context to an error</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="ot">rethrow ::</span> <span class="dt">MonadError</span> e m <span class="ot">=&gt;</span> (e <span class="ot">-&gt;</span> e) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m a</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">rethrow f action <span class="fu">=</span> action <span class="ot">`catchError`</span> (throwError <span class="fu">.</span> f )</a></code></pre></div>
+<p>This lets me build up a nested error that adds context at each level. Then a function renders that as an <code>Error a</code>. That context can be used in different ways to render each field, for example, generally I ignore the wrapping errors for the header but it’s useful for the summary and hints.</p>
+<p>With this new setup I get to keep both the descriptive internal error representation and a generic global representation. It also meanst that I can actually compose a pipeline together!</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ot">parse     ::</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> (<span class="dt">Error</span> ann) (<span class="dt">Module</span> <span class="dt">SourceSpan</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="ot">typecheck ::</span> <span class="dt">Module</span> <span class="dt">SourceSpan</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> (<span class="dt">Error</span> ann) (<span class="dt">Module</span> <span class="dt">TypeAnnotation</span>)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="ot">pipeline ::</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> (<span class="dt">Error</span> ann) (<span class="dt">Module</span> <span class="dt">TypeAnnotation</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">pipeline <span class="fu">=</span> parse <span class="fu">&gt;=&gt;</span> typecheck <span class="co">-- yay, it compiles!</span></a></code></pre></div>
+<p>This gives me a solid error-reporting foundation to build off of. An idea for expansion I have is to build an <code>error-verbosity</code> flag that allows the user to decide how much detail to give. An expert user might not need as much information as a beginner and would prefer a denser output. I could also use this to build an <code>error-format=json</code> flag to explore editor integration / LSP.</p>
+<p>That’s all folks!</p>
     </section>
 </article>
 

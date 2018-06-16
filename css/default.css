@@ -213,6 +213,9 @@ nav a{
  color:#b58900;
  text-decoration:none}
 
+h2 a{
+ color:#2aa198}
+
 a{
  text-decoration:none;
  color:#dc322f;
@@ -224,3 +227,9 @@ a{
  padding:0}
  .post-list li{
  list-style-type:none}
+
+code{
+ padding:0 5px}
+
+pre code{
+ padding:10px}
