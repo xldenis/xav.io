@@ -69,7 +69,6 @@
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="ot">pipeline ::</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> (<span class="dt">Error</span> ann) (<span class="dt">Module</span> <span class="dt">TypeAnnotation</span>)</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">pipeline <span class="fu">=</span> parse <span class="fu">&gt;=&gt;</span> typecheck <span class="co">-- yay, it compiles!</span></a></code></pre></div>
 <p>This gives me a solid error-reporting foundation to build off of. An idea for expansion I have is to build an <code>error-verbosity</code> flag that allows the user to decide how much detail to give. An expert user might not need as much information as a beginner and would prefer a denser output. I could also use this to build an <code>error-format=json</code> flag to explore editor integration / LSP.</p>
-<p>That’s all folks!</p>
     </section>
 </article>
 
