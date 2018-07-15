@@ -1,6 +1,6 @@
 ---
 date: 2017-12-18
-title: 'WIP: why compilers'
+title: 'why compilers'
 ---
 
 For the past year I've been

@@ -72,6 +72,3 @@ pipeline = parse >=> typecheck -- yay, it compiles!
 ```
 
 This gives me a solid error-reporting foundation to build off of. An idea for expansion I have is to build an `error-verbosity` flag that allows the user to decide how much detail to give. An expert user might not need as much information as a beginner and would prefer a denser output. I could also use this to build an `error-format=json` flag to explore editor integration / LSP.
-
-
-That's all folks!

@@ -18,5 +18,3 @@ When you compile LLVM IR with `-g` in `clang`, it will generate the `dSYM` bundl
 ![](/images/debugger-gc.png)
 
 Runtime dropped from 13.32sto 4.43s on the main thread! At some point in the future I'll have to learn how to properly generate source-level debug metadata, but not now.
-
-That's all folks!
