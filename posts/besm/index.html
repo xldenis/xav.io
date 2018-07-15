@@ -37,6 +37,14 @@
 <p>I wanted to share some of the history I discovered, the insights I gained and hopefully to provoke readers to think about the impact of culture in software engineering. So, I’ve been working on faithfully reimplementing one of the first soviet compilers or programming programme.</p>
 <h3 id="programming-programmes">Programming Programmes</h3>
 <p>Described in A.P. Ershov’s 1959 book “Programming Programme for the BESM Computer”, ПП-BESM, was a language implemented for the BESM computer, one of the first large scale soviet computers. Started in 1954, after a lecture on ПП-1 a precursor language, it was finished by 1955.</p>
+<p>Based on the “Operator Method”, described by A. A. Lyapunov in the first university programming course in 1953, it establishes a separation of programs into two separate parts: a program scheme in which a sequence of ‘operators’, control operators, are listed and a specification of those operators in which each operator is elaborated. This leads Lyapunovian languages to have what would now be considered a very alien syntax:</p>
+<figure>
+<img src="../../images/lyapunov-scheme.png" alt="Lyapunov’s Program Scheme Notation" /><figcaption>Lyapunov’s Program Scheme Notation</figcaption>
+</figure>
+<p>Lyapunov’s ‘language’ was never implemented nor was it really meant to be, it acted more as a form of pseudocode. Programs could be written in it and then translated by hand to machine code. The syntax of the operator method made reasoning about and constructing programs simpler. In ПП-BESM, this strict separation was perfectly maintained so the same program looks like:</p>
+<figure>
+<img src="../../images/pp-besm.png" alt="PP-BESM equivalent" /><figcaption>PP-BESM equivalent</figcaption>
+</figure>
     </section>
 </article>
 
