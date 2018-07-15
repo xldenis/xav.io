@@ -172,6 +172,9 @@ p{
  p img{
  max-width:100%}
 
+figure img{
+ max-width:100%}
+
 main{
  width:90%;
  margin:auto}
