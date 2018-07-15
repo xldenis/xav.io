@@ -8,3 +8,4 @@ public/stylesheets/
 _site/
 _cache/
 .stack-work/
+.DS_Store

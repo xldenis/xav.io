@@ -13,7 +13,7 @@ When you compile LLVM IR with `-g` in `clang`, it will generate the `dSYM` bundl
 
 ![](/images/debugger-malloc.png)
 
- It revealed exactly what I had suspected originally, a rare occurence! The calls to `malloc` were the ones taking up the runtime! This led me to doing something I had put off for a long time: adding a garbage collector!
+It revealed exactly what I had suspected originally, a rare occurence! The calls to `malloc` were the ones taking up the runtime! This led me to doing something I had put off for a long time: adding a garbage collector!
 
 ![](/images/debugger-gc.png)
 
