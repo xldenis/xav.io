@@ -1,4 +1,4 @@
- .string{display:inline;color:#2aa198!important}.string:before{content:"\"";
+.string{display:inline;color:#2aa198!important}.string:before{content:"\"";
     color: #93a1a1; }
   .string:after {
     content: "\"";color:#93a1a1}.hash{font-family:Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;padding-top:50px;color:#839496;margin:auto}.hash .pair{display:block;text-indent:0.5em}.hash .pair:after{content:","}.hash .pair:last-child:after{content:""}.hash .key{color:#2aa198!important;display:inline-block;margin:0.25em 0}.hash .key:before{content:"\"";
