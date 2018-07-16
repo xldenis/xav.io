@@ -45,6 +45,18 @@
 <figure>
 <img src="../../images/pp-besm.png" alt="PP-BESM equivalent" /><figcaption>PP-BESM equivalent</figcaption>
 </figure>
+<p>The operator method was effectively an attempt at decomposing a problem down into constituent parts that could be written and verified independently, not quite sub-routines but hte next best thing. However, the syntax of ПП-BESM wasn’t the only thing that was different. The language also incorporated novel features.</p>
+<h4 id="loops">Loops</h4>
+<p>It’s one/the first language to have an explicit loop construct. Each loop refers to a <em>parameter</em> defined in a specific section of the program. The parameter can be of three different forms:</p>
+<ul>
+<li>Non-Characteristic: It is given a lower and upperbound and steps between them by unity</li>
+<li>Characteristic Specific: In some cases we want a variable number of iterations, so instead we provide a lower bound and a logical condition for when to terminate the loop.</li>
+<li>Dependent on a higher order parameter: It’s also possible to define the upper bound for a loop in relation to another, surrounding loop.</li>
+</ul>
+<h4 id="variable-addresses">Variable Addresses</h4>
+<p>ПП-BESM has no pointer arithmetic or direct access to memory in the language. Instead, it provides a tool called <em>variable addresses</em>. A variable address provides access to cells of a memory block, according to a pre-established linear relation between up to three loop paremeters. This allows ПП-BESM to do things like index into loops.</p>
+<h4 id="optimization">Optimization</h4>
+<p>This was also the first language to feature any form of optimization. ПП-BESM can use the rules of commutativity to eliminate common arithmetic sub-expressions. It also can optimize the usage of intermediate results when performing those operations.</p>
     </section>
 </article>
 
