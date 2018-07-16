@@ -7,15 +7,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-stack-work-{{ checksum "xxx.cabal" }}
+            - v2-stack-work-{{ checksum "xxx.cabal" }}
       - run:
           name: Build executable
           command: stack build
       - save_cache:
           paths:
             - .stack-work
-            - /root/.stack/
-          key: v1-stack-work-{{ checksum "xxx.cabal" }}
+          key: v2-stack-work-{{ checksum "xxx.cabal" }}
       - deploy:
           name: Deploy master to Github Pages
           command: |
