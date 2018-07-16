@@ -1,12 +1,6 @@
-resolver: nightly-2018-03-10
+resolver: nightly-2018-06-10
 
 extra-deps:
-- pandoc-citeproc-0.12.1
 - hakyll-sass-0.2.3
-allow-newer: true
 packages:
 - .
-- location:
-    git: https://github.com/jaspervdj/hakyll
-    commit: 39b247ee9208fbbb2f183ddf5d0db98772a51b3e
-  extra-dep: true

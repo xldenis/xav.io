@@ -10,7 +10,7 @@ html {
 body {
   font-size: 1.6rem;
   line-height: 1.5;
-  color: $base01;
+  color: $base00;
   background: $base3;
 }
 
@@ -25,6 +25,14 @@ p {
 figure {
   img {
     max-width: 100%;
+    display: block;
+  }
+
+  figcaption {
+    padding: 5px 15px;
+    background-color: $base2;
+    color: $base1;
+    font-size: 1.2rem;
   }
 }
 
