@@ -26,3 +26,24 @@ Based on the "Operator Method", described by A. A. Lyapunov in the first univers
 Lyapunov's 'language' was never implemented nor was it really meant to be, it acted more as a form of pseudocode. Programs could be written in it and then translated by hand to machine code. The syntax of the operator method made reasoning about and constructing programs simpler. In ПП-BESM, this strict separation was perfectly maintained so the same program looks like:
 
 ![PP-BESM equivalent](/images/pp-besm.png)
+
+The operator method was effectively an attempt at decomposing a problem down into constituent parts that could be written and verified independently, not quite sub-routines but hte next best thing. However, the syntax of ПП-BESM wasn't the only thing that was different. The language also incorporated novel features.
+
+#### Loops
+
+It's one/the first language to have an explicit loop construct. Each loop refers to a _parameter_ defined in a specific section of the program. The parameter can be of three different forms:
+
+- Non-Characteristic: It is given a lower and upperbound and steps between them by unity
+- Characteristic Specific: In some cases we want a variable number of iterations, so instead we provide a lower bound and a logical condition for when to terminate the loop.
+- Dependent on a higher order parameter: It's also possible to define the upper bound for a loop in relation to another, surrounding loop.
+
+#### Variable Addresses
+
+ПП-BESM has no pointer arithmetic or direct access to memory in the language. Instead, it provides a tool called _variable addresses_. A variable address provides access to cells of a memory block, according to a pre-established linear relation between up to three loop paremeters. This allows ПП-BESM to do things like index into loops.
+
+#### Optimization
+
+This was also the first language to feature any form of optimization. ПП-BESM can use the rules of commutativity to eliminate common arithmetic sub-expressions. It also can optimize the usage of intermediate results when performing those operations.
+
+
+
