@@ -17,15 +17,17 @@ body {
 p {
   font-family: "ff-din-web-pro-1", "ff-din-web-pro-2", sans-serif;
   font-weight: lighter;
-  img {
-    max-width: 100%;
-  }
 }
 
 figure {
+  display: table;
+  margin: 0 auto;
+
   img {
-    max-width: 100%;
+    max-width: 660px;
+    width: 100%;
     display: block;
+    margin: 0 auto;
   }
 
   figcaption {
@@ -33,6 +35,8 @@ figure {
     background-color: $base2;
     color: $base1;
     font-size: 1.2rem;
+    display: table-caption;
+    caption-side: bottom;
   }
 }
 
