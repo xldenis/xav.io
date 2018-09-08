@@ -1,6 +1,6 @@
 ---
 date: 2018-07-15
-title: besm
+title: ПП-BESM
 ---
 
 In February, my friend [\@moe](https://github.com/mac-adam-chaieb) came to visit me for a couple weeks. While he was here we talked about programming language design, unicode and the impact that anglo-centering of the computinng world. Moe brought up the language [Qalb](https://github.com/nasser/---), an arabic script, scheme-like language which was also a reflection on these issues.
@@ -39,11 +39,15 @@ It's one/the first language to have an explicit loop construct. Each loop refers
 
 #### Variable Addresses
 
-ПП-BESM has no pointer arithmetic or direct access to memory in the language. Instead, it provides a tool called _variable addresses_. A variable address provides access to cells of a memory block, according to a pre-established linear relation between up to three loop paremeters. This allows ПП-BESM to do things like index into loops.
+ПП-BESM has no pointer arithmetic or direct access to memory in the language. Instead, it provides a tool called _variable addresses_. A variable address provides access to cells of a memory block, according to a pre-established linear relation between up to three loop paremeters. This allows ПП-BESM to do things like index into matrices.
 
 #### Optimization
 
 This was also the first language to feature any form of optimization. ПП-BESM can use the rules of commutativity to eliminate common arithmetic sub-expressions. It also can optimize the usage of intermediate results when performing those operations.
 
+#### Compiler Input
 
+The BESM-1, the computer on which ПП-BESM ran, had no text input, instead it could read 39-bit words from punch cards. Those words  represented either instructions or floating point numbers. This meant that ПП-BESM programs had to be encoded as numbers or invalid instructions. This meant that before even feeding a program to the compiler it had to go through a tedious 'coding' step where the program was encoded in the correct punch-card form.
+
+Put together ПП-BESM is a fascinating language that no one has heard of. I've decided to bring it to everyone's attention by fully reimplementing it. I've started a project which will implement the compiler in it's original machine code, and encode programs into their binary representation to be run through the compiler. I'd like to use this to highlight the differences between the early languages that are remembered and the Soviet languages that didn't. Looking at the different ways languages could have evolved is puts our current world of technology into perspective. We chose to follow one specific branch of language design and may never know what would have happened if we instead had chosen a different branch.
 
