@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Xavier Denis - besm</title>
+        <title>Xavier Denis - ПП-BESM</title>
         <link rel="stylesheet" href="../../css/default.css" />
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900" rel="stylesheet" type="text/css">
     </head>
@@ -22,7 +22,7 @@
             <link rel="stylesheet" href="../../css/highlighting.css" />
 <article>
     <section class="header">
-        <h2>besm</h2>
+        <h2>ПП-BESM</h2>
         <date>Posted on 2018-07-15</date>
         
     </section>
@@ -54,9 +54,12 @@
 <li>Dependent on a higher order parameter: It’s also possible to define the upper bound for a loop in relation to another, surrounding loop.</li>
 </ul>
 <h4 id="variable-addresses">Variable Addresses</h4>
-<p>ПП-BESM has no pointer arithmetic or direct access to memory in the language. Instead, it provides a tool called <em>variable addresses</em>. A variable address provides access to cells of a memory block, according to a pre-established linear relation between up to three loop paremeters. This allows ПП-BESM to do things like index into loops.</p>
+<p>ПП-BESM has no pointer arithmetic or direct access to memory in the language. Instead, it provides a tool called <em>variable addresses</em>. A variable address provides access to cells of a memory block, according to a pre-established linear relation between up to three loop paremeters. This allows ПП-BESM to do things like index into matrices.</p>
 <h4 id="optimization">Optimization</h4>
 <p>This was also the first language to feature any form of optimization. ПП-BESM can use the rules of commutativity to eliminate common arithmetic sub-expressions. It also can optimize the usage of intermediate results when performing those operations.</p>
+<h4 id="compiler-input">Compiler Input</h4>
+<p>The BESM-1, the computer on which ПП-BESM ran, had no text input, instead it could read 39-bit words from punch cards. Those words represented either instructions or floating point numbers. This meant that ПП-BESM programs had to be encoded as numbers or invalid instructions. This meant that before even feeding a program to the compiler it had to go through a tedious ‘coding’ step where the program was encoded in the correct punch-card form.</p>
+<p>Put together ПП-BESM is a fascinating language that no one has heard of. I’ve decided to bring it to everyone’s attention by fully reimplementing it. I’ve started a project which will implement the compiler in it’s original machine code, and encode programs into their binary representation to be run through the compiler. I’d like to use this to highlight the differences between the early languages that are remembered and the Soviet languages that didn’t. Looking at the different ways languages could have evolved is puts our current world of technology into perspective. We chose to follow one specific branch of language design and may never know what would have happened if we instead had chosen a different branch.</p>
     </section>
 </article>
 
