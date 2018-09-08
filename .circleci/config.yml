@@ -1,6 +1,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      ignore:
+        - master
     docker:
       - image: xldenis/hakyll:4.12.3.0-ext
     steps:
