@@ -1,6 +1,7 @@
 ---
 date: 2019-01-28
 title: Generative Art
+private: true
 ---
 
 _I've decided to teach myself generative art, and to more generally work on visual and audio artworks throughout the year. To that end I want to create one "piece" a week, more akin to a sketch, both to practice skills and techniques as well as to try out some ideas._

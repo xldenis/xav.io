@@ -11,6 +11,8 @@ import           Data.List              (isSuffixOf, isPrefixOf, isInfixOf,
                                          intercalate, sort)
 import           System.FilePath.Posix  (takeBaseName, takeDirectory,
                                          (</>), takeFileName)
+
+import 		 Control.Monad (filterM)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
@@ -53,7 +55,7 @@ main = hakyll $ do
     create ["archive.html"] $ do
         route cleanRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- removePrivate =<< recentFirst =<< loadAll "posts/*"
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Archives"            `mappend`
@@ -108,3 +110,10 @@ postCtx :: Context String
 postCtx =
     -- dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+removePrivate :: MonadMetadata m => [Item a] -> m [Item a]
+removePrivate items = do
+	filterM (\item -> do
+		metadata <- getMetadata (itemIdentifier item)
+		maybe (pure True) (const (pure False)) (lookupString "private" metadata)
+	 ) items
