@@ -13,7 +13,7 @@ jobs:
       
     - name: Install dependencies
       run: |
-        stack --no-terminal --fast --install-ghc test --only-dependencies
+        stack --no-terminal --install-ghc test --only-dependencies
     - name: Build
       run: |
         stack build --fast
