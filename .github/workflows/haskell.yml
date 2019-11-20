@@ -10,7 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: mstksg/setup-stack@v1
-      
+    - name: Cache build dependencies
+      uses: actions/cache@v1
+      with:
+        path: .stack-work/
+        key: ${{ runner.OS }}-stack-cache-${{ github.ref }}
     - name: Install dependencies
       run: |
         stack --no-terminal --install-ghc test --only-dependencies
