@@ -21,8 +21,10 @@ body {
 article {
   margin-top: 50px;
   display: inline-block;
-  font-weight: 100;
+  font-weight: 400;
 
+  max-width: 780px;
+  margin: auto 0;
   h1,h5,h6 {
     font-family: 'Source Sans Pro', 'Arimo','Lato';
   }
