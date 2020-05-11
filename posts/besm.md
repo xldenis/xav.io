@@ -53,7 +53,7 @@ Put together ПП-BESM is a fascinating language that no one has heard of. I've 
 
 #### Comments
 
-If you have any questions don't hesitate to reach out to me on twitter ![@xldenis](https://twitter.com/xldenis)
+If you have any questions don't hesitate to reach out to me on twitter [\@xldenis](https://twitter.com/xldenis)
 
 #### References
 
