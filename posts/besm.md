@@ -53,15 +53,15 @@ Put together ПП-BESM is a fascinating language that no one has heard of. I've 
 
 #### Comments
 
-If you have any questions don't hesitate to reach out to me on twitter [@xldenis](https://twitter.com/xldenis)
+If you have any questions don't hesitate to reach out to me on twitter ![@xldenis](https://twitter.com/xldenis)
 
 #### References
 
 Here are some of the resources I've used in my research for those that are interested in the subject:
 
-[1]A. P. Ershov, “Program texts,” Academician Andrei Ershov’s Archive, Jun. 20, 2016. http://ershov.iis.nsk.su/en/node/777629 (accessed May 11, 2020).
-[2]A. P. Ershov, Programming Programme for the BESM Computer. .
-[3]G. D. Crowe and S. E. Goodman, “S.A. Lebedev and the birth of Soviet computing,” IEEE Annals of the History of Computing, vol. 16, no. 1, pp. 4–24, Spring 1994, doi: 10.1109/85.251852.
-[4]A. P. Ershov and M. R. Shura-Bura, “The Early Development of Programming in the USSR**English text edited by Ken Kennedy, Department of Mathematical Sciences, Rice University, Houston, Texas.,††This research was carried out for the International Research Conference on the History of Computing held at Los Alamos, New Mexico, 10–15 June 1976.,” in A History of Computing in the Twentieth Century, N. Metropolis, J. Howlett, and G.-C. Rota, Eds. San Diego: Academic Press, 1980, pp. 137–196.
-[5]S. A. Lebedev, “The High-Speed Electronic Calculating Machine of the Academy of Sciences of the U.S.S.R.,” J. ACM, vol. 3, no. 3, pp. 129–133, Jul. 1956, doi: 10.1145/320831.320832.
+- [1]A. P. Ershov, “Program texts,” Academician Andrei Ershov’s Archive, Jun. 20, 2016. http://ershov.iis.nsk.su/en/node/777629 (accessed May 11, 2020).
+- [2]A. P. Ershov, Programming Programme for the BESM Computer. .
+- [3]G. D. Crowe and S. E. Goodman, “S.A. Lebedev and the birth of Soviet computing,” IEEE Annals of the History of Computing, vol. 16, no. 1, pp. 4–24, Spring 1994, doi: 10.1109/85.251852.
+- [4]A. P. Ershov and M. R. Shura-Bura, “The Early Development of Programming in the USSR**English text edited by Ken Kennedy, Department of Mathematical Sciences, Rice University, Houston, Texas.,††This research was carried out for the International Research Conference on the History of Computing held at Los Alamos, New Mexico, 10–15 June 1976.,” in A History of Computing in the Twentieth Century, N. Metropolis, J. Howlett, and G.-C. Rota, Eds. San Diego: Academic Press, 1980, pp. 137–196.
+- [5]S. A. Lebedev, “The High-Speed Electronic Calculating Machine of the Academy of Sciences of the U.S.S.R.,” J. ACM, vol. 3, no. 3, pp. 129–133, Jul. 1956, doi: 10.1145/320831.320832.
 
