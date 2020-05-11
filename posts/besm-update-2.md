@@ -1,6 +1,6 @@
 ---
 date: 2020-05-09
-title: 'ПП-BESM: Progress Report 2
+title: 'ПП-BESM: Progress Report 2'
 private: true
 ---
 
