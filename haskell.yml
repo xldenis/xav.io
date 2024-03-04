@@ -9,7 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: mstksg/setup-stack@v1
+    - uses: haskell-actions/setup@v2
+      with:
+        enable-stack: true
       
     - name: Install dependencies
       run: |
