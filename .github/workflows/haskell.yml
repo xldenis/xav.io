@@ -12,17 +12,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: haskell-actions/setup@v2
+    - id: setup-haskell-stack
+      uses: haskell-actions/setup@v2
       with:
         enable-stack: true
     - name: "Cache"
       uses: actions/cache@v3
       with:
-        key: ${{ matrix.os.runner }}-${{ hashFiles(matrix.stack-yaml) }}-${{ env.cache_generation }}
-        restore-keys: |
-          ${{ matrix.os.runner }}-
+        key: ${{ runner.os }}-${{ hashFiles(matrix.stack-yaml) }}-${{ env.cache_generation }}
         path: |
-          ${{ steps.setup-haskell-cabal.outputs.stack-root }}
+          ${{ steps.setup-haskell-stack.outputs.stack-root }}
     - name: Install dependencies
       run: |
         stack --no-terminal --install-ghc test --only-dependencies
