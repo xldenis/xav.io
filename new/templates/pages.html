@@ -1,14 +1,9 @@
 {% extends "base.html" %}
-
 {% block head %}
 {% set title = page.title %}
 {{ super() }}
 {% endblock head %}
 
 {% block content %}
-<article>
-<h1>{{ page.title }}</h1>
-<p class="subtitle">Xavier Denis</p>
 {{ page.content | safe }}
-</article>
 {% endblock content %}

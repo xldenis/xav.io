@@ -8,12 +8,24 @@
 {% block content %}
 
 {%- set section_item = get_section(path="blog/" ~ "_index.md") %}
-<section>
-<ul class = "post-list">
-{% for page in section_item.pages %}
-<li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
-{% endfor %}
-</ul>
-</section>
+<article>
+{% for page in section.pages %}
+<!-- <section> -->
+<h2><a href="{{page.permalink | safe }}">{{ page.title | safe }}</a></h2>
+<p>
+{%- if page.summary %}
+  {{ page.summary | markdown(inline=true) | safe }}
+{%- elif page.description %}
+  {{ page.description | safe }}
+{%- elif page.content %}
+  {{ page.content | striptags | truncate(length=150) | safe }}
+{%- elif page.extra.static_thumbnail %}
+{%- endif %}
 
+<a style="float:right; " href="{{page.permalink | safe }}">Read more →</a>
+</p>
+<!-- </section> -->
+
+{% endfor %}
+</article>
 {% endblock content %}

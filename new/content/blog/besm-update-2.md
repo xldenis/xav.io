@@ -12,7 +12,7 @@ Over time my emulator for the BESM machine has become more complete and sophisti
 
 I also developped a system to load 'debug symbols' in with the code. The BESM compiler doesn't have "functions", instead it's structured as a control flow graph consisting of "operators" which come from the soviet programming system the "operator method". These operators are regrouped into several "procedures" or sub-graphs which are loaded one by one during the execution. Since the BESM computer used 39-bit words, and my binary format for the BESM machine code encoded one word in every 64-bit one, this left me with 25 bits of spare room for each instruction. In those spare bits I encoded the procedure and operator of each instruction. Then in the VM I would read that information out and produce a trace of the operators visited in order. This enabled me to visualize the "high-level" flow of a program execution, particularily useful to do things like count the number of loop iterations.
 
-# The compiler
+## The compiler
 
 I also made a lot of progress on the actual implementation of the compiler. At some point last year I managed to implement the entire first pass and I believe I've eliminated most of the bugs in it. It's hard to be absolutely certain since it requires me to read the binary intermediate representations of the compiler. It's very interesting to see how Ershov squeezed common sub-expression elimination and other optimizations into those couple hundred instructions though.
 

@@ -5,7 +5,7 @@ title: 'ПП-BESM: Progress Report'
 
 When I wrote my first post on ПП-BESM, I hadn't mentioned that I'd already started and made serious progress on my project. In this post I'll give a quick summary of what I've accomplished since then.
 
-## 1 Encoding Source-Level Programs
+## Encoding Source-Level Programs
 
 As I mentioned in the previous post, source level programs had to be very tedious encoded as numbers. This encoding was very dependent on the exact position of various pieces of information, which made manually coding a tricky and tedious process. Luckily we aren't stuck in 1952 anymore. I wrote a program called `pp-besm` that is responsible for parsing a text representation of the program and producing the coded binary as a series of hexadecimal numbers (which can then be converted to actual binary).
 
@@ -32,7 +32,7 @@ I've copied the description of each operator in the book as a comment alongside 
 
 As I've gotten used to writing working programs for the BESM, I've been able to at least 10x my speed. This gives me hope that I'll be able to finish the first pass in short order.
 
-## 2 BESM-1 VM
+## BESM-1 VM
 
 In order to execute ПП-BESM and the resulting programs it generates, I needed a VM which could actually execute the instructions. I chose to write this VM in Rust as an autodidactic exercise. At this point it supports 16 / 33 operators, the ones that are missing are primarily related to multiplication and division, which I have been too lazy to implement.
 
