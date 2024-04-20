@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block head %}
-{% set title = page.title %}
-{{ super() }}
-{% endblock head %}
-
-{% block content %}
-{{ page.content | safe }}
-{% endblock content %}

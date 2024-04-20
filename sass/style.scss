@@ -1,0 +1,90 @@
+// @import "normalize";
+// @import "json";
+// @import "zsh";
+
+// $white: #eee;
+
+// html {
+//   color-profile: sRGB;
+// }
+
+// body {
+//   width:100%;
+//   margin:0;
+//   font-weight: 100;
+//   background: $base3;
+//   color: $base01;
+//   text-align: center;
+// }
+
+// article {
+//   margin-top: 50px;
+//   margin-left: auto;
+//   margin-right: auto;
+
+//   width: 87.5;
+//   max-width: 1400px;
+
+//   padding-left: 12.5%;
+
+//   font-weight: 400;
+
+
+
+//   h1,h5,h6 {
+//     font-family: 'Source Sans Pro', 'Arimo','Lato';
+//   }
+
+//   .left-aligned {
+//     text-align: left;
+//   }
+// }
+
+// footer {
+//   margin: 2em 0;
+//   vertical-align: middle;
+// }
+
+// a {
+//   text-decoration: none;
+//   color: $red;
+//   font-weight: 400;
+
+//   &:hover {
+//     border-bottom: 1px dashed;
+//  }
+// }
+
+// @media (max-width: 440px) {
+//   .array {
+//     display: inline-block;
+//     padding-left: 1em;
+//   }
+// }
+
+// @media (max-width: 480px) {
+//   article {
+//     width: 100%;
+//   }
+//   .zsh > .comment {
+//     display: none;
+//   }
+//   .hash {
+//     .pair {
+//       text-indent: 0em;
+//     }
+//   }
+// }
+
+// @media (max-width: 610px) {
+//   article {
+//     width: 90%;
+//   }
+// }
+
+// @media (min-width: 950px) {
+//   body{
+//     font-size: 1.5rem;
+//   }
+// }
+

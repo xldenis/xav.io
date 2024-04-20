@@ -1,0 +1,500 @@
+@import "normalize";
+// @import "json";
+@import "typescale";
+
+@import url("syntax-theme-dark.css") (prefers-color-scheme: dark);
+@import url("syntax-theme-light.css") (prefers-color-scheme: light);
+
+:root {
+  --highlight: rgb(203, 90, 52);
+  --background-2: rgb(126, 130, 127);
+  --foreground: rgb(246, 244, 230);
+  --background: rgb(16, 18, 18);
+}
+
+// 246 244 230
+// 203 90 52
+// 16 18 18
+// 126 130 127
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: rgb(246, 244, 230);
+    --background-2: #333;
+    --foreground: rgb(16, 18, 18);
+    // --foreground-2:
+  }
+}
+
+
+html {
+  font-size: 82.5%;
+  color: var(--foreground);
+
+}
+
+body {
+  font-family: Palatino, 'Georgia', serif;
+  font-size: 1.6rem;
+  line-height: 1.55;
+  font-weight: 400;
+
+  background: var(--background);
+}
+
+main {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 87.5%;
+  max-width: 1400px;
+
+  padding-left: 12.5%;
+}
+
+h1, h2, h3 {
+    font-family: 'Gill Sans', sans;
+}
+
+h1 {
+    // padding-bottom: 1em;
+}
+h2 {
+    padding-top: 1em;
+}
+
+h1 {
+    font-weight: 400;
+    // margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    font-size: 3.2rem;
+    line-height: 1;
+}
+
+h2 {
+    font-style: italic;
+    font-weight: 400;
+    margin-top: 2.1rem;
+    margin-bottom: 1.4rem;
+    font-size: 2.2rem;
+    line-height: 1;
+}
+
+h3 {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.7rem;
+    margin-top: 2rem;
+    margin-bottom: 1.4rem;
+    line-height: 1;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    width: 55%;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+p.subtitle {
+    font-style: italic;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    font-size: 1.8rem;
+    display: block;
+    line-height: 1;
+}
+
+article {
+  counter-reset: sidenote-counter;
+  padding: 5rem 0rem;
+}
+
+// pulldown-cmark doesn't wrap the paragraphs following a header in a section tag
+
+article {
+  & > p, > footer, > table {
+    width: 55%;
+  }
+
+  & > dl, > ol, > ul {
+    width: 50%;
+    padding: 5%;
+  }
+}
+
+
+p {
+  font-weight: 100;
+  // text-align: justify;
+}
+
+dt:not(:first-child),
+li:not(:first-child) {
+    margin-top: 0.25rem;
+}
+
+
+a {
+  color: var(--foreground);
+}
+
+img {
+  max-width: 760px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Chapter Epigraphs */
+// div.epigraph {
+//     margin: 5em 0;
+// }
+
+blockquote p {
+    width: 55%;
+}
+
+blockquote {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+blockquote,
+blockquote > p {
+    font-style: italic;
+}
+
+blockquote > footer {
+    font-style: normal;
+}
+
+blockquote > footer > cite {
+    font-style: italic;
+}
+/* end chapter epigraphs styles */
+
+
+/* figures */
+
+figure {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    max-width: 55%;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 0 0 3em 0;
+}
+
+figcaption {
+    float: right;
+    clear: right;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: baseline;
+    position: relative;
+    // max-width: 40%;
+}
+
+figure.fullwidth figcaption {
+    margin-right: 24%;
+}
+
+/* end figures */
+
+
+/* Sidenotes, margin notes, figures, captions */
+img {
+    max-width: 100%;
+}
+
+.sidenote,
+.marginnote {
+    float: right;
+    clear: right;
+    margin-right: -60%;
+    width: 50%;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    vertical-align: baseline;
+    position: relative;
+}
+
+.sidenote-number {
+    counter-increment: sidenote-counter;
+}
+
+.sidenote-number:after,
+.sidenote:before {
+    font-family: et-book-roman-old-style;
+    position: relative;
+    vertical-align: baseline;
+}
+
+.sidenote-number:after {
+    content: counter(sidenote-counter);
+    font-size: 1rem;
+    top: -0.5rem;
+    left: 0.1rem;
+}
+
+.sidenote:before {
+    content: counter(sidenote-counter) " ";
+    font-size: 1rem;
+    top: -0.5rem;
+}
+
+blockquote .sidenote,
+blockquote .marginnote {
+    margin-right: -82%;
+    min-width: 59%;
+    text-align: left;
+}
+
+div.fullwidth,
+table.fullwidth {
+    width: 100%;
+}
+
+input.margin-toggle {
+    display: none;
+}
+
+
+label.sidenote-number {
+    display: inline-block;
+    max-height: 2rem; /* should be less than or equal to paragraph line-height */
+}
+
+label.margin-toggle:not(.sidenote-number) {
+    display: none;
+}
+
+pre {
+  width: 55%;
+  // padding: 2%;
+  background: none !important;
+}
+
+code, pre > code {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 1.0rem;
+    line-height: 1.42;
+    -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS. See https://github.com/edwardtufte/tufte-css/issues/81#issuecomment-261953409 */
+}
+
+pre > code {
+    font-size: 0.9rem;
+    // width: 52.5%;
+    margin-left: 2.5%;
+    overflow-x: auto;
+    display: block;
+}
+
+/* end sidenotes and margin notes */
+
+
+a:link,
+a:visited {
+    color: inherit;
+}
+
+a:link, .tufte-underline, .hover-tufte-underline:hover {
+    text-decoration: none;
+    background: -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(currentColor, currentColor);
+    background: linear-gradient(#fffff8, #fffff8), linear-gradient(#fffff8, #fffff8), linear-gradient(currentColor, currentColor);
+    -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    text-shadow:
+       0.03em  0      var(--background),
+      -0.03em  0      var(--background),
+       0       0.03em var(--background),
+       0      -0.03em var(--background),
+       0.06em  0      var(--background),
+      -0.06em  0      var(--background),
+       0.09em  0      var(--background),
+      -0.09em  0      var(--background),
+       0.12em  0      var(--background),
+      -0.12em  0      var(--background),
+       0.15em  0      var(--background),
+      -0.15em  0      var(--background);
+    background-position: 0% 93%, 100% 93%, 0% 93%;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    a:link, .tufte-underline, .hover-tufte-underline:hover {
+        background-position-y: 87%, 87%, 87%;
+    }
+}
+
+
+a:link::selection,
+a:link::-moz-selection {
+    // text-shadow: unset;
+    text-shadow:
+       0.03em  0      #afd2f2,
+      -0.03em  0      #afd2f2,
+       0       0.03em #afd2f2,
+       0      -0.03em #afd2f2,
+       0.06em  0      #afd2f2,
+      -0.06em  0      #afd2f2,
+       0.09em  0      #afd2f2,
+      -0.09em  0      #afd2f2,
+       0.12em  0      #afd2f2,
+      -0.12em  0      #afd2f2,
+       0.15em  0      #afd2f2,
+      -0.15em  0      #afd2f2;
+    background:       #afd2f2;
+    // background:unset;
+}
+
+
+
+
+/* header */
+
+nav {
+  font-family: Gill Sans, sans;
+
+  & > a:link {
+    font-size: 2rem;
+    // color: $yellow;
+    text-transform: uppercase;
+    background: unset;
+    text-shadow: unset;
+
+  }
+
+  a {
+    margin-right: 2rem;
+  }
+
+  h1 { margin: 0; padding: 0; }
+}
+
+.logo {
+  display: inline-block;
+
+  a {
+    font-weight: bold;
+    color: rgba(0,0,0,0);
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: var(--foreground);
+
+    text-decoration: none;
+
+    background: unset;
+    text-shadow: unset;
+
+    &:hover {
+      color: var(--foreground);
+    }
+  }
+}
+
+/* end header */
+
+
+a {
+  text-decoration: none;
+  font-weight: 400;
+
+ //  &:hover {
+ //    border-bottom: 1px dashed;
+ // }
+}
+
+
+/* responsive */
+
+@media (max-width: 760px) {
+    body {
+        width: 84%;
+        padding-left: 8%;
+        padding-right: 8%;
+    }
+
+    hr,
+    article > p,
+    article > footer,
+    article > table {
+        width: 100%;
+    }
+
+    pre > code {
+        width: 97%;
+    }
+
+    article > dl,
+    article > ol,
+    article > ul {
+        width: 90%;
+    }
+
+    figure {
+        max-width: 90%;
+    }
+
+    figcaption,
+    figure.fullwidth figcaption {
+        margin-right: 0%;
+        max-width: none;
+    }
+
+    blockquote {
+        margin-left: 1.5em;
+        margin-right: 0em;
+    }
+
+    blockquote p,
+    blockquote footer {
+        width: 100%;
+    }
+
+    label.margin-toggle:not(.sidenote-number) {
+        display: inline;
+    }
+
+    .sidenote, .marginnote {
+        display: block;
+        float: left;
+        left: 1rem;
+        clear: both;
+        width: 95%;
+        margin: 1rem 2.5%;
+        vertical-align: baseline;
+        position: relative;
+
+        padding: 0.5em 0;
+        border-top: 0.5px var(--highlight) solid;
+        border-bottom: 0.5px var(--highlight) solid;
+    }
+
+    label {
+        cursor: pointer;
+    }
+
+    div.table-wrapper,
+    table {
+        width: 85%;
+    }
+
+    img {
+        width: 100%;
+    }
+}
+/* end responsive */

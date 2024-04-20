@@ -1,6 +1,0 @@
-resolver: nightly-2024-03-01
-
-extra-deps:
-- hakyll-sass-0.2.4
-packages:
-- .

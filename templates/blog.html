@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% set title = section.title %}
+{{ super() }}
+{% endblock head %}
+
+{% block content %}
+
+{%- set section_item = get_section(path="blog/" ~ "_index.md") %}
+
+{% for page in section.pages %}
+<section>
+<h2><a href="{{page.permalink | safe }}">{{ page.title | safe }}</a></h2>
+
+</section>
+
+{% endfor %}
+{% endblock content %}
