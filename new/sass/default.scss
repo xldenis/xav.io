@@ -1,0 +1,297 @@
+@import "normalize";
+// @import "json";
+@import "typescale";
+
+@import url("syntax-theme-dark.css") (prefers-color-scheme: dark);
+@import url("syntax-theme-light.css") (prefers-color-scheme: light);
+
+:root {
+  --highlight: rgb(203, 90, 52);
+  --background-2: var(126, 130, 127);
+  --foreground: var(246, 244, 230);
+  --background: var(16, 18, 18);
+}
+
+// 246 244 230
+// 203 90 52
+// 16 18 18
+// 126 130 127
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(203, 90, 52);
+    --background-2: #333;
+    --foreground: var(16, 18, 18);
+    // --foreground-2:
+  }
+}
+
+
+html {
+  font-size: 82.5%;
+  color: var(--foreground);
+
+}
+
+body {
+  font-family: 'Georgia', serif;
+  font-size: 1.6rem;
+  line-height: 1.55;
+  font-weight: 400;
+
+  background: var(--background);
+}
+
+main {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 87.5%;
+  max-width: 1400px;
+
+  padding-left: 12.5%;
+}
+
+article {
+  counter-reset: sidenote-counter;
+}
+
+// pulldown-cmark doesn't wrap the paragraphs following a header in a section tag
+
+article {
+  & > p, > footer, > table {
+    width: 55%;
+  }
+
+  & > dl, > ol, > ul {
+    width: 50%;
+    padding: 5%;
+  }
+}
+
+p {
+  font-weight: 100;
+  text-align: justify;
+}
+
+dt:not(:first-child),
+li:not(:first-child) {
+    margin-top: 0.25rem;
+}
+
+
+a {
+  color: var(--foreground);
+}
+
+img {
+  max-width: 760px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+figure {
+  display: table;
+  margin: 0 auto;
+
+  figcaption {
+    padding: 5px 15px;
+    background-color: var(--background);
+    font-size: 1.2rem;
+    display: table-caption;
+    caption-side: bottom;
+  }
+}
+
+
+/* Chapter Epigraphs */
+div.epigraph {
+    margin: 5em 0;
+}
+
+div.epigraph > blockquote {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+div.epigraph > blockquote,
+div.epigraph > blockquote > p {
+    font-style: italic;
+}
+
+div.epigraph > blockquote > footer {
+    font-style: normal;
+}
+
+div.epigraph > blockquote > footer > cite {
+    font-style: italic;
+}
+/* end chapter epigraphs styles */
+
+
+/* figures */
+
+figure {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    max-width: 55%;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 0 0 3em 0;
+}
+
+figcaption {
+    float: right;
+    clear: right;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: baseline;
+    position: relative;
+    max-width: 40%;
+}
+
+figure.fullwidth figcaption {
+    margin-right: 24%;
+}
+
+/* end figures */
+
+
+/* Sidenotes, margin notes, figures, captions */
+img {
+    max-width: 100%;
+}
+
+.sidenote,
+.marginnote {
+    float: right;
+    clear: right;
+    margin-right: -60%;
+    width: 50%;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    vertical-align: baseline;
+    position: relative;
+}
+
+.sidenote-number {
+    counter-increment: sidenote-counter;
+}
+
+.sidenote-number:after,
+.sidenote:before {
+    font-family: et-book-roman-old-style;
+    position: relative;
+    vertical-align: baseline;
+}
+
+.sidenote-number:after {
+    content: counter(sidenote-counter);
+    font-size: 1rem;
+    top: -0.5rem;
+    left: 0.1rem;
+}
+
+.sidenote:before {
+    content: counter(sidenote-counter) " ";
+    font-size: 1rem;
+    top: -0.5rem;
+}
+
+blockquote .sidenote,
+blockquote .marginnote {
+    margin-right: -82%;
+    min-width: 59%;
+    text-align: left;
+}
+
+div.fullwidth,
+table.fullwidth {
+    width: 100%;
+}
+
+input.margin-toggle {
+    display: none;
+}
+
+
+label.sidenote-number {
+    display: inline-block;
+    max-height: 2rem; /* should be less than or equal to paragraph line-height */
+}
+
+label.margin-toggle:not(.sidenote-number) {
+    display: none;
+}
+
+pre {
+  width: 55%;
+  // padding: 2%;
+  background: none !important;
+}
+
+code, pre > code {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 1.0rem;
+    line-height: 1.42;
+    -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS. See https://github.com/edwardtufte/tufte-css/issues/81#issuecomment-261953409 */
+}
+
+pre > code {
+    font-size: 0.9rem;
+    // width: 52.5%;
+    margin-left: 2.5%;
+    overflow-x: auto;
+    display: block;
+}
+
+/* end sidenotes and margin notes */
+
+
+/* header */
+
+nav {
+  & > a {
+    font-size: 2rem;
+    // color: $yellow;
+    text-transform: uppercase;
+  }
+
+  a {
+    margin-right: 2rem;
+  }
+}
+
+.logo {
+  display: inline-block;
+
+  a {
+    font-size: inherit;
+    font-weight: bold;
+    // color: $yellow;
+    text-decoration: none;
+  }
+}
+
+// h2 a { color: $cyan; }
+
+a {
+  text-decoration: none;
+  // color: $red;
+  font-weight: 400;
+
+  &:hover {
+    border-bottom: 1px dashed;
+ }
+}
+
+/* end header */
