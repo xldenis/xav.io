@@ -8,12 +8,14 @@
 {% block content %}
 
 {%- set section_item = get_section(path="blog/" ~ "_index.md") %}
-<section>
+<article>
+<!-- <section> -->
 <ul class = "post-list">
 {% for page in section_item.pages %}
 <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
 {% endfor %}
 </ul>
-</section>
+<!-- </section> -->
+</article>
 
 {% endblock content %}

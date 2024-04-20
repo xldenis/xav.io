@@ -12,6 +12,7 @@
 {% for page in section.pages %}
 <!-- <section> -->
 <h2><a href="{{page.permalink | safe }}">{{ page.title | safe }}</a></h2>
+<time>{{ page.date | date(format="%B %d, %Y") | safe }}</time>
 <p>
 {%- if page.summary %}
   {{ page.summary | markdown(inline=true) | safe }}
