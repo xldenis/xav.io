@@ -5,6 +5,7 @@
 {% endblock head %}
 
 {% block content %}
+<h1>{{page.title | safe }}</h1>
 <article>
 {{ page.content | safe }}
 </article>
