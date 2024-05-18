@@ -9,3 +9,4 @@ _site/
 _cache/
 .stack-work/
 .DS_Store
+public/
