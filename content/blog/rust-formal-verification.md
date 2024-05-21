@@ -4,8 +4,8 @@ draft: true
 date: '2024-03-16'
 ---
 
-In response to a recent [Boats article](https://without.boats/blog/references-are-like-jumps/), I mentioned that [Rust's type system drastically changes verification](https://twitter.com/xldenis/status/1790297114519404692).
-This comment seems to have aroused a lot of [interest](https://graydon2.dreamwidth.org/312681.html), so I figured I'd expand on it, explaining *how* Rust simplifies formal verification and *why* this had the verification community excited for a while now.
+In response to a recent [Boats article](https://without.boats/blog/references-are-like-jumps/), I mentioned that [Rust's type system drastically changes things for verification](https://twitter.com/xldenis/status/1790297114519404692).
+This comment seems to have aroused a lot of [interest](https://graydon2.dreamwidth.org/312681.html), so I figured I'd expand on it, explaining *how* Rust simplifies formal verification and why this had the verification community excited for a while now.
 
 I assume that most of you reading this post won't be experts in formal methods so before we talk about what Rust brings to the table, I think it merits to explain what formal verification is and what problems it has. I'm a novice when it comes to blogging, but I'll try to avoid too many technical details and keep things snappy -- bear with me please.
 
@@ -21,7 +21,7 @@ x := 2
 { is_even(x) }
 ```
 We surround our code `x := 2` by two *state assertions* in curly braces, the first is called the *precondition* and describes the state of our program before execution while the second is called the *postcondition* and describes what must be true *after* execution.
-{% mn() %}We call these precondition-program-postcondition combinations *Hoare triples*. They are a standard syntax for stating and reasoning about the correctness of programs.{% end %}
+{% mn() %}We call these precondition-program-postcondition combinations [*Hoare triples*](https://en.wikipedia.org/wiki/Hoare_logic#Hoare_triple). They are a standard syntax for stating and reasoning about the correctness of programs.{% end %}
 The task of verification is then to prove that *all* states satisfying our precondition must also satisfy our postcondition -- which in this case is evidently true.
 
 Of course, verification problems are not as trivial as our first example, the languages we consider are more complex, and the programs we verify are larger, both of these make it difficult to *scale* verifiers{% sn() %}In most cases, verifiers are working on *undecidable* problems due to Rice's Theorem. Moreover, this is one domain where exponential worst-case runtimes are often considered *fast*. For example, SAT solvers run in exponential time and SMT solvers in general diverge. To make matters worse, often the reasoning that has to be performed is exponential in size to the program, without even getting solvers involved! {% end %}.
@@ -40,7 +40,7 @@ This is -- of course -- a huge part of the motivation for Rust's borrow checker,
 
 ## framing the problem
 
-The frame or footprint of an operation refers to the set of memory locations that may be affected by that operation.
+The *frame* of an operation refers to the parts of the state that are left unchanged, by that operation.
 If you can determine the precise frame of each operation, you can know which facts about your program are unaffected by it.
 Finding the appropriate frame is essential in verification; if we frame out (remove) too much information we won't be able to finish our proof, but if we leave too much in, we'll accumulate too much information and get stuck.
 The objective is to identify exactly what part of the state we need to enable *local* reasoning, shrinking the part of the state we need to consider at any point in time.
@@ -60,9 +60,9 @@ The framing problem effectively stalled work on the verification of imperative p
 
 ### separating resources
 
-The turn of the millennium marked the beginning of a new era with the introduction of *separation* by O'Hearn and Reynolds{% sn() %}Citation{% end %} logic which builds upon the notions of *logical resources* first introduced by Girard for linear logic.
-In separation logic, we treat ownership of memory as a non-duplicable *resource*{% mn() %}The power of separation logic in reasoning about memory has led to it being extended to reasoning about *other* kinds of resources, some of which might be (partially) duplicable, fractional or have other fun properties. Examples include reasoning about time steps, energy (like electricity), or security. {% end %}, if I have ownership of some address `a`, I can't also give you ownership of `a`, that would be like if I could turn one dollar into two.
-To combine resources we have a *separating conjunction* `a &*& b` which represents the combination of *disjoint* resources `a` and `b` (like two separate addresses).
+The turn of the millennium marked the beginning of a new era with the introduction of separation by O'Hearn and Reynolds{% sn() %}Reynolds, John C. ["Separation logic: A logic for shared mutable data structures."](https://ieeexplore.ieee.org/document/1029817) Proceedings 17th Annual IEEE Symposium on Logic in Computer Science. IEEE, 2002.{% end %} logic which builds upon the notions of *logical resources* first introduced by Girard for linear logic.
+In separation logic, we treat ownership of memory as a non-duplicable resource{% mn() %}The power of separation logic in reasoning about memory has led to it being extended to reasoning about *other* kinds of resources, some of which might be (partially) duplicable, fractional or have other fun properties. Examples include reasoning about time steps, energy (like electricity), or security. {% end %}, if I have ownership of some address `a`, I can't also give you ownership of `a`, that would be like if I could turn one dollar into two.
+To combine resources we have a *separating conjunction* `a &*& b` which represents the combination of disjoint resources `a` and `b` (like two separate addresses).
 
 The magic then comes from a new rule, pointedly called the *Frame Rule*, which says: If I can prove `{ P } C { Q }` then I can prove `{ P &*& R } C { Q &*& R }`, for any `P`, `Q`, and `R`.
 Another way to put it is that to say, if we can put aside `R` for a moment, then afterwards, we'll still have `R`.
@@ -85,7 +85,7 @@ Many thanks to Ilya Sergey for [the incredible graphic above](https://ilyasergey
 {% end %}
 
 Modern separation logics like Iris are wonderfully powerful tools, allowing us to precisely state and reason about the most complex and subtle programs and properties.
-Using separation logic it becomes possible to *scalable* verification tools for imperative languages like C, Java, Javascript, or even machine code.
+Using separation logic it becomes possible to build *scalable* verification tools for imperative languages like C, Java, Javascript, or even machine code.
 
 ## why rust, then?
 
@@ -94,8 +94,13 @@ If separation logic is so great, why do formal verification researchers care so 
 Separation logic intertwines a memory safety proof into every verification proof; for example, to write to a pointer you must demonstrate ownership of that pointer.
 This both poses an *aesthetic* and practical problem, every step of proof must track which resources are used where, and which are being framed, hiding the essence of the proof's argument and causing new issues for automation.
 
-Separation logic wasn't the only revolution which happened at the turn of the millennium, the same period saw the introduction of CDCL SAT solvers and modern SMT solvers, exponentially increasing our ability to solve propositional and first-order logical problems{% sn() %} Add graphic showing the power of SAT / SMT over time {% end %}.
-In comparison the automation for separation logic is in its relative infancy, and significantly harder to boot; separation logics tend to be in much tougher complexity classes than ordinary logics{% sn() %}Compared to "ordinary" logics, separation logic is very hard, even simple fragments will be at best PSPACE-complete (much worse than EXP). Intuitively this is caused by how automation must track how it 'spends' its resources.{% end %}.
+Separation logic wasn't the only revolution which happened at the turn of the millennium, the same period saw the introduction of CDCL SAT solvers and modern SMT solvers, exponentially increasing our ability to solve propositional and first-order logical problems{% sn() %}
+The x-axis is the number of solved problems while the y-axis is time. Improvements from 2002 to 2011.
+![https://www.researchgate.net/figure/Performance-improvements-of-SAT-solvers-2002-2011-Points-further-to-the-right-correspond_fig1_319489361](../sat-performance.png)
+Graphic from [The HACMS program: Using formal methods to eliminate exploitable bugs](https://www.researchgate.net/figure/Performance-improvements-of-SAT-solvers-2002-2011-Points-further-to-the-right-correspond_fig1_319489361).
+
+{% end %}.
+In comparison, the automation for separation logic is in its relative infancy, and significantly harder to boot; separation logics tend to be in much tougher complexity classes than ordinary logics{% sn() %}Compared to "ordinary" logics, separation logic is very hard, even simple fragments will be at best PSPACE-complete (much worse than EXP). Intuitively this is caused by how automation must track how it 'spends' its resources.{% end %}.
 
 That's where Rust enters the picture, the ideal target language for formal verification is one which allows us to keep the strengths of separation logic reasoning -- its precise framing -- while ditching its weaknesses -- the tedious and sometimes difficult resource tracking.
 This would allow us to have good reasoning principles for complex imperative patterns while benefiting from the high-powered automation available for first-order logics.
@@ -105,7 +110,7 @@ Setting aside interior mutability for the moment, the ownership typing of Rust t
 Even better, `Box<T>` asserts *exclusive* ownership of a memory region for `T`, giving us our "points to" predicates.
 
 In some sense, the Rust type checker is *performing a separation logic proof for us*, each time we compile our program.
-If we could rely on the Rust type system to guarantee memory safety and separation for us, freeing us from the need to do that in separation logic and instead allow us to focus on the core *functional* properties we want to prove{% sn() %}
+If we could rely on the Rust type system to guarantee memory safety and separation for us, freeing us from the need to do that in separation logic and instead allow us to focus on the core functional properties we want to prove{% sn() %}
 The first tool to note this was [Prusti (2019)](https://github.com/viperproject/prusti-dev), which verifies Rust programs in a separation logic verifier but uses typing information to automate the separation logic parts of the proof!
 {% end %}.
 Except that Rust has a core feature which seems to violate the strict separation that we so desire: **borrows**.
@@ -121,7 +126,7 @@ Both these tools use the Rust type system to eliminate the need for separation l
 Through this encoding they are able to leverage all the pre-existing tools for reasoning in first-order logics (SMT solvers for Creusot and Lean for Aeneas).
 
 What's even more fascinating about Rust is how some tools like [Verus](https://github.com/verus-lang/verus) have gone even further and added separation logic *back in* after eliminating it.
-Verus has a notion of "proof mode" code, where you write code which Rust will borrow check, using the type system to handle the separation logic reasoning about code that potentially has *nothing to do about memory safety*.
+Verus has a notion of "proof mode" code, where you write code which Rust will borrow check, using the type system to handle the separation logic reasoning about code that potentially has *nothing to do about memory safety*!
 Rust has shown that maybe the borrow checker was what we needed to bring separation logic, and thus scalable verification to the masses!
 
 ## conclusion
