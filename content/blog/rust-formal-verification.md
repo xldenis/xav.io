@@ -151,3 +151,6 @@ Combined with the module system of OCaml which lets you hide the implementation 
 
 While in practice OCaml programs are often disciplined in their use of mutation, formal verifiers have to assume the worst: to prove `{ P } totally_not_evil (x : ref int) (y : ref int) { Q }`, we need to consider every possible value for `x` and `y`, even those where they mutably alias.
 Unlike Rust, OCaml doesn't (yet) have any notion of "unique reference" which could be used to recover nice reasoning principles.
+
+
+*Many thanks to Boris, [Bouke](https://twitter.com/bvdbijl), and [Sacha](https://twitter.com/SachaAyoun) for their comments, and [Boats](https://twitter.com/withoutboats) for the motivation to write.*
