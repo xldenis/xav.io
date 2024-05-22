@@ -95,7 +95,7 @@ Separation logic intertwines a memory safety proof into every verification proof
 This both poses an *aesthetic* and practical problem, every step of proof must track which resources are used where, and which are being framed, hiding the essence of the proof's argument and causing new issues for automation.
 
 Separation logic wasn't the only revolution which happened at the turn of the millennium, the same period saw the introduction of CDCL SAT solvers and modern SMT solvers, exponentially increasing our ability to solve propositional and first-order logical problems{% sn() %}
-The x-axis is the number of solved problems while the y-axis is time. Improvements from 2002 to 2011.
+The x-axis is the number of solved problems while the y-axis is CPU time. Improvements from 2002 to 2011.
 ![https://www.researchgate.net/figure/Performance-improvements-of-SAT-solvers-2002-2011-Points-further-to-the-right-correspond_fig1_319489361](../sat-performance.png)
 Graphic from [The HACMS program: Using formal methods to eliminate exploitable bugs](https://www.researchgate.net/figure/Performance-improvements-of-SAT-solvers-2002-2011-Points-further-to-the-right-correspond_fig1_319489361).
 
@@ -153,4 +153,4 @@ While in practice OCaml programs are often disciplined in their use of mutation,
 Unlike Rust, OCaml doesn't (yet) have any notion of "unique reference" which could be used to recover nice reasoning principles.
 
 
-*Many thanks to Boris, [Bouke](https://twitter.com/bvdbijl), and [Sacha](https://twitter.com/SachaAyoun) for their comments, and [Boats](https://twitter.com/withoutboats) for the motivation to write.*
+*Many thanks to Boris, [Bouke](https://twitter.com/bvdbijl), and [Sacha](https://twitter.com/SachaAyoun) for their comments, and [Boats](https://without.boats/) for the motivation to write.*
