@@ -54,6 +54,7 @@ Tony Hoare already implicitly observed the problems pointers cause for framing i
 <footer>C.A.R. Hoare, Hints on programming-language design 1974</footer>
 </blockquote>
 
+The additional of pointers means we need to reason *globally* about state, each modification to a pointer could invalidate *arbitrary* facts about our program. 
 The framing problem effectively stalled work on the verification of imperative programs for *decades*.
 
 
