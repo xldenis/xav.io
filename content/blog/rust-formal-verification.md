@@ -1,7 +1,6 @@
 ---
 title: 'Visions of the future: formal verification in Rust'
-draft: true
-date: '2024-03-16'
+date: '2024-05-22'
 ---
 
 In response to a recent [Boats article](https://without.boats/blog/references-are-like-jumps/), I mentioned that [Rust's type system drastically changes things for verification](https://twitter.com/xldenis/status/1790297114519404692).
