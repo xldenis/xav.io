@@ -9,6 +9,9 @@ build_search_index = false
 
 generate_feed = true
 
+title = "xavxav"
+author = "Xavier Denis"
+
 [markdown]
 smart_punctuation = true
 # Whether to do syntax highlighting
