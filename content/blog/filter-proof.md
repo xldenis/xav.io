@@ -55,5 +55,48 @@ impl<I: Iterator, F: FnMut(&I::Item) -> bool> Iterator for Filter<I, F> {
         None
     }
 }
-
 ```
+
+Here we define `filter` in the obvious manner, we loop over the elements of the underlying iterator, passing each to our predicate until we find one that returns `true`.
+The real implementation is actually written in terms of `Iterator::find` but this is just adding another layer of indirection around the same code.
+
+For verification we're also going to make a few simplifying assumptions:
+
+1. Our closure `self.func` has no mutable state, that is after each call `old(self.func) == self.func`.
+2. We'll go even further and assume that the closure has no precondition. This means that we forall `i : &I::Item` we can call `self.func(i)`.
+
+Since our type `F` could be *any* `FnMut(&I::Item) -> bool` we need to restrict ourselves to only the functions which satisfy our two conditions.
+We can accomplish this using a *type invariant*, which are supported in Creusot.
+
+```rust
+impl Invariant<I: Iterator, F: FnMut(&I::Item) -> bool> for Filter<F, I> {
+  #[predicate(prophetic)]
+  #[open(self)] fn invariant(self) -> bool {
+    pearlite! {
+      // precondition is always true
+      (forall<f : F, i : &I::Item> f.precondition((i,)))  &&
+      // all chains of closure states produced by repeated calls are equal
+      (forall<f : F, g : F> f.unnest(g) ==> f == g)
+    }
+  }
+}
+```
+
+Here we bring in our first taste of specifications using the `pearlite!` macro.
+The trait `Invariant` has a single predicate which must be upheld by all "valid" values of `Filter`, Creusot will automatically insert assertions checking that this invariant is true at key points throughout your program.
+
+The first clause, states that for all values of our *function* `f`, any item `i` satisfies that function's precondition, meaning that precondition is always true.
+This ensures we are always allowed to call the closure with any value.
+
+Taking things a step further, we want to ensure that the closure state also never changes because this will make our future efforts simpler.
+We can achieve this using the special `unnest` {% sn() %}
+The precise definition of this predicate is a little complicated but for our purposes it relates the states produced by successive calls to a mutable closure.
+Though today we consider the name `unnest` deprecated, we haven't yet found a good replacement term. We're open to [suggestions](https://github.com/creusot-rs/creusot/issues/new).
+{% end %}
+predicate provided by Creusot.
+The second clause thus states that for any state `f`, all states `g` which can be derived from it must be equal to `f`.
+
+## First run
+
+If we run Creusot on this code, we get back a positive result telling us everything was proven succcessfully, but *what* did we prove?
+By default, Creusot attempts to prove that all preconditions are upheld and all panics are avoided, this base level of verification is generally called "safety" and when it is true, it guarantees that your program does not crash.

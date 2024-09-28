@@ -501,3 +501,22 @@ a {
     }
 }
 /* end responsive */
+
+/* code higlights */
+
+pre mark  {
+  /* If you want your highlights to take the full width */
+  // display: block;
+  /* The default background colour of a mark is bright yellow */
+  background-color: inherit;
+  color: inherit;
+
+  > {
+    text-decoration-style: wavy;
+    text-decoration-color: red;
+    text-decoration: underline;
+  }
+}
+
+
+/* end code highlights */
