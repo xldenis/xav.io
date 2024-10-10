@@ -2,6 +2,7 @@
 title: 'Verifying Filter in Rust'
 date: '2024-09-28'
 draft: true
+katex_enable: true
 ---
 
 Last Friday I had the opportunity to do a proof with Creusot which I found quite interesting and satisfying highlighting both the strengths and weaknesses of my tool [Creusot](https://github.com/creusot-rs/creusot).
@@ -99,4 +100,36 @@ The second clause thus states that for any state `f`, all states `g` which can b
 ## First run
 
 If we run Creusot on this code, we get back a positive result telling us everything was proven succcessfully, but *what* did we prove?
-By default, Creusot attempts to prove that all preconditions are upheld and all panics are avoided, this base level of verification is generally called "safety" and when it is true, it guarantees that your program does not crash.
+By default, Creusot attempts to prove that all preconditions are upheld and all panics are avoided, this base level of verification is generally called "safety" and when it is true, it guarantees that your program does not crash, but nothing else.
+
+## Showing that filter... filters
+
+The next step is to show that our implementation of `filter` is 'correct', that it returns exactly all the  elements which match our predicate, moreover we want to do so in a manner that will compose well with other iterators so that we can chain `filter` with other iterators.
+In Creusot, we specify iterators through a combination of two predicates: `completed` and `produced`, the first describes the states in which our iterator is finished, in this case whenever the underlying one is.
+The second predicate, `self.produced(items, target)` relates to states using a sequences of items produced by the iterator to transition from `self` to `target`.
+
+The challenge in verifying `filter` lies in the definition of this predicate, for each item produced, we could have iterated over 10, 100, 1000 items from the inner iterator.
+To correctly describe what it means for `filter` to produce an element we need access to this invisible sequence of unseen inner elements.
+Moreover, we will need to "align" this sequence with the observed values, this kind of structured is called a "scattered subsequence", we have a sequence `items` which is spread out through another sequence `v`.
+
+```rust
+pearlite! {
+    pearlite! {
+            self.func.unnest(succ.func) &&
+            // f here is a mapping from indices of `visited` to those of `s`, where `s` is the whole sequence produced by the underlying iterator
+            // Interestingly, Z3 guesses `f` quite readily but gives up *totally* on `s`. However, the addition of the final assertions on the correctness of the values
+            // blocks z3's guess for `f`.
+            exists<s, f : Mapping<Int, Int>> self.iter.produces(s, succ.iter) &&
+                // `f` is a monotone mapping
+                (forall<i : _, j :_ > 0 <= i && i <= j && j < visited.len() ==> 0 <= f.get(i) && f.get(i) <= f.get(j) && f.get(j) < s.len()) &&
+                // `f` is an injection from `visited` to `s`
+                (forall<i : _, > 0 <= i && i < visited.len() ==> visited[i] == s[f.get(i)]) &&
+
+                (forall<bor_f : &mut F> *bor_f == self.func && ^bor_f == self.func ==>
+                    (forall< i : _> 0 <= i &&  i < s.len() ==>  (exists<j : _> 0 <= j && j < visited.len() && f.get(j) == i) == bor_f.postcondition_mut((&s[i],), true))
+                    // (forall< i : _> 0 <= i &&  i < s.len() ==>  bor_f.postcondition_mut((&s[i],), true) ==> exists<j : _> 0 <= j && j < visited.len() && f.get(j) == i)
+                )
+        }
+}
+```
+
