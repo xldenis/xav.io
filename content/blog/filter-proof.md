@@ -5,37 +5,26 @@ draft: true
 katex_enable: true
 ---
 
-Last Friday I had the opportunity to do a proof with Creusot which I found quite interesting and satisfying highlighting both the strengths and weaknesses of my tool [Creusot](https://github.com/creusot-rs/creusot).
-I want to share this proof with a broader audience and along the way give some insight on how sophisticated proofs are designed and performed in Creusot.
+*This is a post I wrote last year and only got around to publishing now.*
 
-Iterators are probably one of the most widely used functionalities in Rust, most collection types implement a variety of them, and libraries like `itertools` provide additional combinators to manipulate them.
-Because of their central role in real-world Rust programs, last year we published a paper on verifying the implementations and clients of iterators, in which our capstone was a proof of correctness for `map` which handles side-effectful closures{% sn() %}
-What was especially cool with this work was that this was all achieved in an ordinary first-order logic verifier, despite higher-order effectul code traditionally being the domain of separation logic tools
-This is once again a demonstration of how Rust's ownership model enables powerful reasoning with 'weak' tools.
-{% end %}, allowing us to prove the correctness of programs like{% sn() %}
-For those less familiar with verification, despite being artificial this program encodes a significant amount of complexity: to prove its correct we must prove that `cnt` never overflows, which depends on being able to demonstrate that `map` will never be called more than `usize::MAX` times.
-Internally, the proof must build a 'chain' showing that each call to the closure leaves it in a state where we can make a further call.
-{% end %}:
+I recently had a chance to do a cute proof of `filter` in Rust which I think highlights both the strengths and weakenesses of [Creusot]() the verification tool I developed in my thesis.
+Verification can be counter-intuitive because often simple code can pose the greatest challenges.
+Understanding *why* code is correct requires a totally different skill set than *writing* that code in the first place.
+This proof highlights this tension.
 
-```rust
-let mut cnt = 0;
-let _ = v.iter().map(|x| { cnt += 1; x }).collect();
-assert!(v.len() == cnt);
-```
+In Rust, iterators are one of the most foundational abstractions available and basically every program of more than 100 lines makes use of them and their various combinators. So what does it mean for an iterator to be correct?
 
-After `map` probably the most important iterator in Rust is `filter`, which returns the elements which match a provided predicate `p`.
-I feel like to users `filter` appears *simpler* than `map`, after all `map` transforms elements while `filter` only selects some while leaving them unchanged.
-Counter intuitively, for verification `filter` is actually considered *harder* to verify than `map`, because for each element `fitler` produes, it may consume an unbounded amount of elements from the underlying iterator.
-The verification will need to "talk" about all those elements and relate them to the ones that *were* produced by the iterator.
-For this reason, after our paper we never even *attempted* to prove `filter`, until last week when I took a stab at it.
-It ended up being both *easier* and *harder* than I expected and pushed the limits of Creusot in what I consider to be interesting directions which is what leads us to today.
+That was the question we set out to answer in a 2023 paper I wrote with my advisors in which we formalized the correctness of iterators in terms of transitition systems.
+In that paper, we proved the correctness of a dozen iterators including ones with side-effects like `iter_mut`, but none of them compared to the complexity of a simple `iter.map(|x| x)`.
 
-## Our initial implementation
+Our capstone was a general proof of correctness for `map` which handled all the edge-cases including closures that have side-effects or can even panic.
+That 300 line proof reveals a surprising complexity hiding in the 10 lines it to implement `map`, so what gives?
 
-To get started with verification, we're going to need some code to verify, so let's implement `filter`:
-{% mn() %}
-This implementation of `filter` also happens to showcase one of Creusot's distinguishing features: its completely handling of mutable borrows. This allows us to use sophisticated patterns like iterating over a mutable borrow of an iterator, without any effort.
-{% end %}
+## blah
+
+Since `map` is a bit complex, lets instead focus on something even *harder*: `filter`. What does it mean for `filter` to be correct? 1) the program *runs*, we're able to successfully pursue the iterator to its end, and 2) it produces the *expected* result.
+
+As a reminder, here's the implementation of `filter`:
 
 ```rust
 pub struct Filter<I: Iterator, F: FnMut(&I::Item) -> bool> {
@@ -58,16 +47,20 @@ impl<I: Iterator, F: FnMut(&I::Item) -> bool> Iterator for Filter<I, F> {
 }
 ```
 
-Here we define `filter` in the obvious manner, we loop over the elements of the underlying iterator, passing each to our predicate until we find one that returns `true`.
-The real implementation is actually written in terms of `Iterator::find` but this is just adding another layer of indirection around the same code.
+For an arbitrary `Filter<I, F>` can you describe the conditions under which `next` will run?
 
-For verification we're also going to make a few simplifying assumptions:
+Let's look at some concrete examples:
 
-1. Our closure `self.func` has no mutable state, that is after each call `old(self.func) == self.func`.
-2. We'll go even further and assume that the closure has no precondition. This means that we forall `i : &I::Item` we can call `self.func(i)`.
+- `iter.filter(|i| i % 2 == 0)`
+- `iter.filter(|i| { assert!(i != 0); true })`
+- `iter.filter(|i| { cnt += 1; assert!(cnt < 10); i < cnt })`
 
-Since our type `F` could be *any* `FnMut(&I::Item) -> bool` we need to restrict ourselves to only the functions which satisfy our two conditions.
-We can accomplish this using a *type invariant*, which are supported in Creusot.
+Each call to `next` requires calling the provided closure (`F`) at least once, which in the first case is fine as our function is well defined for any input value. In the second case, its fine so long as we can guarantee a non-zero input, but in the third case things get a lot trickier, we can only call the closure 10 times before it starts panicking.
+
+Closures are tricky! At each call to `next` we need to ensure the next closure call won't crash and that it sets us up in a state to perform the *following* call.
+Dealing with this is where the complexity of our `map` proof emerged, complexity which really only helps express marginal cases, since especially in the case of `filter` we almost *never* pass a predicate with mutable state in.
+
+Rather than having to prove the general case of `filter`, lets restrict ourselves only to a simpler one: immutable closures with no preconditions. To do this, we use a *type invariant*, restricting the valid instances of `Filter<I, F>` to the ones with the properties we care about:
 
 ```rust
 impl Invariant<I: Iterator, F: FnMut(&I::Item) -> bool> for Filter<F, I> {
@@ -83,53 +76,23 @@ impl Invariant<I: Iterator, F: FnMut(&I::Item) -> bool> for Filter<F, I> {
 }
 ```
 
-Here we bring in our first taste of specifications using the `pearlite!` macro.
-The trait `Invariant` has a single predicate which must be upheld by all "valid" values of `Filter`, Creusot will automatically insert assertions checking that this invariant is true at key points throughout your program.
-
 The first clause, states that for all values of our *function* `f`, any item `i` satisfies that function's precondition, meaning that precondition is always true.
 This ensures we are always allowed to call the closure with any value.
+The second clause ensures immutability, stating that any closure state `g` derived from an initial state `f` must be equivalent to `f`.
 
-Taking things a step further, we want to ensure that the closure state also never changes because this will make our future efforts simpler.
-We can achieve this using the special `unnest` {% sn() %}
-The precise definition of this predicate is a little complicated but for our purposes it relates the states produced by successive calls to a mutable closure.
-Though today we consider the name `unnest` deprecated, we haven't yet found a good replacement term. We're open to [suggestions](https://github.com/creusot-rs/creusot/issues/new).
-{% end %}
-predicate provided by Creusot.
-The second clause thus states that for any state `f`, all states `g` which can be derived from it must be equal to `f`.
-
-## First run
-
-If we run Creusot on this code, we get back a positive result telling us everything was proven succcessfully, but *what* did we prove?
-By default, Creusot attempts to prove that all preconditions are upheld and all panics are avoided, this base level of verification is generally called "safety" and when it is true, it guarantees that your program does not crash, but nothing else.
-
-## Showing that filter... filters
-
-The next step is to show that our implementation of `filter` is 'correct', that it returns exactly all the  elements which match our predicate, moreover we want to do so in a manner that will compose well with other iterators so that we can chain `filter` with other iterators.
-In Creusot, we specify iterators through a combination of two predicates: `completed` and `produced`, the first describes the states in which our iterator is finished, in this case whenever the underlying one is.
-The second predicate, `self.produced(items, target)` relates to states using a sequences of items produced by the iterator to transition from `self` to `target`.
-
-The challenge in verifying `filter` lies in the definition of this predicate, for each item produced, we could have iterated over 10, 100, 1000 items from the inner iterator.
-To correctly describe what it means for `filter` to produce an element we need access to this invisible sequence of unseen inner elements.
-Moreover, we will need to "align" this sequence with the observed values, this kind of structured is called a "scattered subsequence", we have a sequence `items` which is spread out through another sequence `v`.
+With one change to the code, Creusot can now prove that our implementation of `filter` will never panic.
 
 ```rust
-pearlite! {
-    pearlite! {
-            self.func.unnest(succ.func) &&
-            // f here is a mapping from indices of `visited` to those of `s`, where `s` is the whole sequence produced by the underlying iterator
-            // Interestingly, Z3 guesses `f` quite readily but gives up *totally* on `s`. However, the addition of the final assertions on the correctness of the values
-            // blocks z3's guess for `f`.
-            exists<s, f : Mapping<Int, Int>> self.iter.produces(s, succ.iter) &&
-                // `f` is a monotone mapping
-                (forall<i : _, j :_ > 0 <= i && i <= j && j < visited.len() ==> 0 <= f.get(i) && f.get(i) <= f.get(j) && f.get(j) < s.len()) &&
-                // `f` is an injection from `visited` to `s`
-                (forall<i : _, > 0 <= i && i < visited.len() ==> visited[i] == s[f.get(i)]) &&
-
-                (forall<bor_f : &mut F> *bor_f == self.func && ^bor_f == self.func ==>
-                    (forall< i : _> 0 <= i &&  i < s.len() ==>  (exists<j : _> 0 <= j && j < visited.len() && f.get(j) == i) == bor_f.postcondition_mut((&s[i],), true))
-                    // (forall< i : _> 0 <= i &&  i < s.len() ==>  bor_f.postcondition_mut((&s[i],), true) ==> exists<j : _> 0 <= j && j < visited.len() && f.get(j) == i)
-                )
+    fn next(&mut self) -> Option<I::Item> {
+        #[invariant(inv(self.iter))]
+        for item in &mut self.iter {
+            if (self.func)(&item) {
+                return Some(item);
+            }
         }
-}
+
+        None
+    }
 ```
 
+This sleight-of-hand, ruling the tricky cases as undesirable and making them impossible is core to verification, figuring out what restrictions to place is where the art lies.
