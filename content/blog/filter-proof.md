@@ -85,7 +85,7 @@ The need to fully describe a program is where a lot of the complexity of verific
 <!-- give an example / explain why -->
 We can't satisfied to with describing the happy or even the unhappy-paths, but _everything_ down to the most minor integer overflow must be accounted for as any violation could invalidate some aspect of our specification. 
 
-# specifying filter
+## specifying filter
  
 Let's try to formally state a specification for `filter`, saying: 
 
@@ -162,7 +162,7 @@ let mut a = true;
 
 On the first iteration, we can successfully call the closure but on the second it will panic, which would violate our specification. 
 
-# ugh, closures
+## ugh, closures
 
 as much as higher-order is convenient when writing programs, it is painful when verifying them. 
 If we want to fully describe what `filter` can do, we must reason about why the closure remains invokable, even as it mutates its captures. 
