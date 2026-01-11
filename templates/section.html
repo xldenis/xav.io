@@ -10,6 +10,7 @@
 {%- set section_item = get_section(path="blog/" ~ "_index.md") %}
 <article>
 {% for page in section.pages %}
+{% if not page.extra.unlisted %}
 <!-- <section> -->
 <h2><a href="{{page.permalink | safe }}">{{ page.title | safe }}</a></h2>
 <time>{{ page.date | date(format="%B %d, %Y") | safe }}</time>
@@ -26,7 +27,7 @@
 <a style="float:right; " href="{{page.permalink | safe }}">Read more →</a>
 </p>
 <!-- </section> -->
-
+{% endif %}
 {% endfor %}
 </article>
 {% endblock content %}

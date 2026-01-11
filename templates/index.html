@@ -12,7 +12,9 @@
 <!-- <section> -->
 <ul class = "post-list">
 {% for page in section_item.pages %}
+{% if not page.extra.unlisted %}
 <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+{% endif %}
 {% endfor %}
 </ul>
 <!-- </section> -->

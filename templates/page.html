@@ -3,6 +3,9 @@
 {% block head %}
 {% set title = page.title %}
 {{ super() }}
+{% if page.extra.unlisted %}
+<meta name="robots" content="noindex, nofollow">
+{% endif %}
 {% endblock head %}
 
 {% block content %}

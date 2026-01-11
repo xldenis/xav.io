@@ -1,8 +1,8 @@
 ---
 title: 'Verifying Filter in Rust'
 date: '2024-09-28'
-draft: true
-katex_enable: true
+extra:
+    unlisted: true
 ---
 
 *This is a post I wrote last year and only got around to publishing now.*

@@ -10,10 +10,11 @@
 {%- set section_item = get_section(path="blog/" ~ "_index.md") %}
 
 {% for page in section.pages %}
+{% if not page.extra.unlisted %}
 <section>
 <h2><a href="{{page.permalink | safe }}">{{ page.title | safe }}</a></h2>
 
 </section>
-
+{% endif %}
 {% endfor %}
 {% endblock content %}
