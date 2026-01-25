@@ -14,9 +14,16 @@ proof with a broader audience, and share some insight into what verification
 _actually_ looks like, the challenges it poses and the advantages it brings.
 
 In this post we'll be considering the verification of `filter` in Rust which 
-a supplied predicate to every element of an underlying iterator.
+a supplied predicate to every element of an underlying iterator. 
+Let's be very ambitious; we want to establish that the following assertion succeeds:
+```rust
+assert!((0..10).filter(|x| x < 10).next().is_some());
+```
 
-Here's the code we'll be working on:
+Obviously this assertion succeeds, but how do we _prove_ that? 
+Crucially, to prove this program correct we'll need to establish the behavior of `filter`, which will take remainder of this post{% sn() %}In previous work, we gave a framework for reasoning about iterators in verification, which we'll be leaning on here. Add paper citation.{% end %}.
+
+As a quick reminder, here's the code we'll be working on{% sn() %}The standard library version is written using additional helpers, but they don't change the meaning of the program {% end %}:
 
 ```rust
 pub struct Filter<I: Iterator, F: FnMut(&I::Item) -> bool> {
@@ -40,11 +47,11 @@ impl<I: Iterator, P: FnMut(&I::Item) -> bool> Iterator for Filter<I, P> {
 ```
 
 When you want to formally verify a program you must start by giving it a specification. 
-One of the great annoyances of formal verification is how precise that specification needs to be: in general your specification should describe *every possible input-output pair* to your program. 
+One of the great annoyances of formal verification is how precise that specification needs to be: in general your specification should describe *every possible input-output pair* to your program.
 In specific circumstances, you may be able to prove a looser specification if you know your program will only be used in specific ways but in the case of a library function like `filter`, you really don't know how it'll be used so you need to assume the worst. 
 
-
-The need to fully describe a program is where a lot of the complexity of verification comes in. Verifiers live in a very manichean world, there are no degrees of truth, a program is either correct or it is not, and the merest incorrectness will be turned against you breaking your entire proof. 
+The need to fully describe a program is where a lot of the complexity of verification comes in. 
+Verifiers live in a very manichean world, there are no degrees of truth, a program is either correct or it is not, and the most trivial incorrectness will be the downfall of the whole proof. 
 <!-- give an example / explain why -->
 We can't satisfied to with describing the happy or even the unhappy-paths, but _everything_ down to the most minor integer overflow must be accounted for as any violation could invalidate some aspect of our specification. 
 
@@ -52,15 +59,19 @@ We can't satisfied to with describing the happy or even the unhappy-paths, but _
  
 Let's try to formally state a specification for `filter`, saying: 
 
-> `filter` produces an iterator consisting of exactly all the elements for which the provideed predicate evaluated to `true`
+> `filter` produces an iterator consisting of exactly all the elements for which the provided predicate evaluated to `true`
 
-The tricky part here, is that for each element that `filter` produces an arbitrary amount of elements in the underlying iterator may have been scanned. To establish that the correspondence between the two exists, we need to obtain a mapping relating the two sequences of values.
+To specify iterators, we can describe the valid sequences of elements produced by that iterator.
+The tricky part here, is that for each element that `filter` produces an arbitrary amount of elements in the underlying iterator may have been scanned. 
+Describing the valid sequences of `filter` requires establishing a correspondence with the elements of the underlying iterator.
 
 ```
-1   2   3   4   5   6   7   8   9   10
+iter (s):                 1   2   3   4   5   6   7   8   9   10
+                              
+     
+iter.filter(is_even) (t):     2       4       6       8       10
 
-   
-    2       4       6       8       10
+m                             1       3       5       7        9
 
 ```
 
@@ -72,47 +83,55 @@ Now we can say, if `filter.iter` produces a sequence of values `s`, then we can 
 forall<i : _> 0 <= i && i < t.len() ==> t[i] == s[m(i)] 
 ```
 
-This specification is written in Pearlite, the specificaiton language of Creusot which has a Rust based syntax. 
+This specification is written in Pearlite, the specification language of Creusot which has a Rust based syntax. It states simply that for all indexes in `t` the value of `t[i]` is the `m(i)`-th value of `s`. 
+In our example: the 0-th value of `t` is the second value of `s`, etc..
 
-To specify an iterator we use a relation called `produces` captures the sequences that can be produced by an iterator. We can write our definition for filter as-so:
+
+Now, we can specify what it means to `filter` as-so: 
 
 ```rust 
 
 impl Filter<I, P> {
-    #[predicate]
+    #[logic]
     fn produces(self, t: Seq<Self::Item>, end: Self) -> bool {
-        exists<s: Seq<_>, m> {
-                self.iter.produces(s, end) && 
-                forall<i : _> 0 <= i && i < t.len() ==> t[i] == s[m(i)]
-        })
+        pearlite! {
+            exists<s: Seq<_>, m> {
+                    self.iter.produces(s, end) && 
+                    forall<i : _> 0 <= i && i < t.len() ==> t[i] == s[m(i)]
+            })
+        }
     }
 
     #[ensures(match result {
-        Some(res) => self.produces(res, ^self),
+        Some(res) => self.produces_one(res),
         None => true
     }
     fn next(&mut self) -> Option<Self::Item> { .. } 
 }
 ```
 
-Great! We've written a specification for filter, its correct, so let's run the solvers and move on to biger better things...
+The syntax `exists` is an existential quantifier, as the name implies it says "there is some sequence of values such that...". 
+We've also attached this specification to `next` saying that if we returned `Some` then we produced one value in our relation. 
+
+
+Great! We've written a specification for filter, its correct, so let's run the solvers and move on to bigger better things...
 
 ```
 cargo creusot prove
-
-....
-
+...
+Goal Coma.vc_next_Filter_I_F: ✘ (16/19)
+  vc_next_Filter_I_F [call_mut requires]
+  vc_next_Filter_I_F [next ensures]
+  vc_next_Filter_I_F [next ensures]
+Library verif.creusot_scratch_rlib.impl_Iterator_for_Filter_I_F.next: ✘ (19/22)
 ```
 
-Wow, that's a lot of errors, Creusot is not happy with our work. In particular, it's telling us that calling `self.func` is an error:
+Wow, that's a lot of errors, Creusot is not happy with our work. 
+In particular, its telling us two things: first, we haven't shown we're allowed to call the closure in our code; second, even if we did, we haven't even shown this proves our postcondition!
 
-```
-self.func
-^^^^^^^^^ some error here
-```
-
+Let's look at the closure part first.
 What's happening here, is that Creusot is asking us to prove that we can satisfy the preconditions of the closure `self.func`. 
-The closure passed to `filter` could be any value, even `|_| panic!("oops")`, to ensure the program doesn't panic, Creusot requires you to prove that you satisfy the precondition of whatever closure is pased in. 
+The closure passed to `filter` could be any value, even `|_| panic!("oops")`, to ensure the program doesn't panic, Creusot requires you to prove that you satisfy the precondition of whatever closure is passed in. 
 
 This is where we can see the complexity of verification start to rear its head. 
 We must ensure that at each iteration we have permission to call the closure, moreover, since the closure could be any `FnMut` (that is it could have arbitrary mutable borrows), we must account for the fact that the closure could be mutating its own captures.
@@ -140,7 +159,7 @@ impl Invariant<I: Iterator, F: FnMut(&I::Item) -> bool> for Filter<F, I> {
       // precondition is always true
       (forall<f : F, i : &I::Item> f.precondition((i,)))  &&
       // all chains of closure states produced by repeated calls are equal
-      (forall<f : F, g : F> f.unnest(g) ==> f == g)
+      (forall<f : F, g : F> f.hist_inv(g) ==> f == g)
     }
   }
 }
@@ -156,10 +175,42 @@ The second clause is what ensures that we don't modify our environment, stating 
 With our new invariant we can try verifying again:
 ```
 cargo creusot prove
-
-.... success!
-
+...
+Goal Coma.vc_next_Filter_I_F: ✘ (17/19)
+  vc_next_Filter_I_F [next ensures]
+  vc_next_Filter_I_F [next ensures]
+Library verif.creusot_scratch_rlib.impl_Iterator_for_Filter_I_F.next: ✘ (20/22)
 ```
+
+Closer! The final problem is that we can't actually show that the values we return are the ones that satisfy our specification.
+This is a classic problem when verifying loops: to "remember" facts across loops they need to be proven to to be _invariant_ over the given loop (unaffected by it). 
+
+```rust
+impl Invariant<I: Iterator, F: FnMut(&I::Item) -> bool> for Filter<F, I> {
+    #[ensures(match result {
+        Some(res) => self.produces_one(res),
+        None => true
+    })]
+    fn next(&mut self) -> Option<I::Item> {
+        let old_self = snapshot! { self };
+        let mut produced = snapshot! { Seq::empty() };
+
+        #[invariant(self.func == old_self.func)]
+        #[invariant(old_self.iter.produces(*produced, self.iter))]
+        while let Some(n) = self.iter.next() {
+            produced = snapshot! { produced.push_back(n) };
+            if (self.func)(&n) {
+                return Some(n);
+            }
+        }
+
+        None
+    }
+}
+```
+
+To finish our argument we need to add two invariants: the first one is remembering that our closure doesn't change when we call `func`, the second is recording the sequence of values produced by the inner iterator and witnessing that they are a valid sequence.
+
 
 ## conclusion 
 
@@ -174,7 +225,7 @@ I've often found that beginners in verification struggle with this: your proof m
 
 ```rust
 pearlite! {
-    self.func.unnest(succ.func) &&
+    self.func.hist_inv(succ.func) &&
     // f here is a mapping from indices of `visited` to those of `s`, where `s` is the whole sequence produced by the underlying iterator
     // Interestingly, Z3 guesses `f` quite readily but gives up *totally* on `s`. However, the addition of the final assertions on the correctness of the values
     // blocks z3's guess for `f`.
