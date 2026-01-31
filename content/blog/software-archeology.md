@@ -20,7 +20,9 @@ This book helps explain a lot of the reasoning and intention of the design but i
 The second are machine code listings from the archives of Andrey that include machine code listings for an earlier revision of the compiler. 
 
 Unfortunately, since the documents are typewritten and the scans are moderately low resolution, quite a few letters blur together and become hard to distinguish. 
-<!-- image from scan -->
+
+![](excerpt-1)
+
 This causes machine translation and OCR tools like Google Translate to trip up: if they can't reliably identify the source letters then the resulting translations turn into gibberish. 
 Since I don't speak Russian it becomes very challenging for me to determine if the errors are caused by single-letter substitutions or something deeper. 
 Historically this forced me into a tedious workflow in which I would manually transcribe words and run them through the translator, correcting lexicographic errors until the translation made sense. 
