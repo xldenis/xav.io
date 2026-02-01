@@ -291,6 +291,10 @@ pre {
   background: none !important;
 }
 
+.fullwidth pre {
+  width: 100%;
+}
+
 code, pre > code {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 1.2rem;
