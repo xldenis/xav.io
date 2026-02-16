@@ -1,8 +1,6 @@
 ---
 title: Software Archeology in 2026
 date: '2026-02-16'
-extra:
-    unlisted: true
 ---
 
 For the past 7 or so years, on and off, I've been recreating [the compiler](https://github.com/xldenis/besm) for the very first programming language created in the USSR
